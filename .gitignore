@@ -1,0 +1,6 @@
+# Local Claude Code settings
+.claude/
+
+# Windows clutter
+Thumbs.db
+desktop.ini

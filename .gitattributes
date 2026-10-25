@@ -1,0 +1,4 @@
+# Store every file byte-for-byte, no line-ending conversion.
+# Windows batch files break with LF-only line endings, so .cmd/.bat must keep CRLF
+# in the repo and in GitHub's "Download ZIP".
+* -text
