@@ -29,7 +29,7 @@ Windows 11'de DPI engellerini (örneğin Türkiye'deki Discord engelini) aşmak 
 
 ## Hızlı başlangıç
 
-1. Depoyu indir (**Code → Download ZIP**). Çıkarmadan önce zip'e sağ tıkla → **Özellikler** → **Engellemeyi kaldır**'ı işaretle → **Tamam** ([aşağıda](#windows-scriptleri-engellerse) anlatıldı), sonra zip'i çıkar ve `Deep Packet Inspection (DPI)` klasörünü aç.
+1. Depoyu indir (**Code → Download ZIP**). Çıkarmadan önce zip'in engelini ana README'deki [Windows scriptleri engellerse](../README.tr.md#windows-scriptleri-engellerse) bölümünde anlatıldığı gibi kaldır, sonra zip'i çıkar ve `Deep Packet Inspection (DPI)` klasörünü aç.
 2. [zapret](zapret) ya da [GoodbyeDPI](goodbyedpi) klasörünü aç ve içindeki README'yi takip et. Kısaca: `custom-files` içindekileri aracın klasörüne kopyala ve `service_custom_create.cmd`'ye çift tıkla.
 
 ## Klasör yapısı
@@ -44,36 +44,6 @@ goodbyedpi\
 ├─ valdik\                       ← orijinal GoodbyeDPI + scriptleri
 └─ README.md
 ```
-
-## Windows scriptleri engellerse
-
-Windows internetten indirilen dosyaları işaretliyor, **Akıllı Uygulama Denetimi** (Smart App Control) ya da SmartScreen de bu yüzden scriptleri çalıştırmayabiliyor (*"Smart App Control blocked a file that may be unsafe"*). Zip'i **çıkarmadan önce** işareti kaldır:
-
-1. İndirdiğin zip'e sağ tıkla → **Özellikler**.
-2. **Genel** sekmesinin altındaki **Engellemeyi kaldır** kutusunu işaretle → **Tamam**. (Bu kutu yoksa dosya işaretli değil, devam et.)
-3. Zip'i çıkar. Çıkan dosyalar engellenmez.
-
-### Engelini kaldırmadan çıkardıysan
-
-Çıkardığın dosyalarda da aynı işaret var. Düzeltmenin iki yolu var:
-
-**A yolu, tekrar çıkar (en kolayı):**
-
-1. Çıkardığın klasörü sil.
-2. Zip'e yukarıdaki 1–2. adımları uygula (**Özellikler** → **Engellemeyi kaldır** → **Tamam**).
-3. Zip'i tekrar çıkar.
-
-**B yolu, çıkardığın klasörün engelini kaldır (tekrar çıkarmadan):**
-
-1. Çıkardığın klasörü aç.
-2. İçinde boş bir yere sağ tıkla → **Terminalde aç**.
-3. Şu satırı yapıştır ve **Enter**'a bas:
-   ```
-   Get-ChildItem -Recurse | Unblock-File
-   ```
-4. Pencereyi kapat. Bu klasördeki ve alt klasörlerindeki bütün scriptler artık çalışır.
-
-Bunun için Akıllı Uygulama Denetimi'ni kapatma: Birçok Windows sürümünde bir kez kapatınca Windows'u yeniden kurmadan tekrar açılamıyor.
 
 ## Antivirüs uyarıları
 

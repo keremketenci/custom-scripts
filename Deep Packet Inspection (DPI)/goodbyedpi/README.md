@@ -127,7 +127,7 @@ These also delete the copies in `C:\ProgramData`. Turkey and valdik use the same
 
 ## Troubleshooting
 
-- **"Smart App Control blocked a file that may be unsafe" / the scripts won't open** → Windows blocks files downloaded from the internet. Either unblock the zip (right-click → **Properties** → tick **Unblock** → **OK**) and extract it again, or, if you don't want to extract again, open the extracted folder → right-click an empty spot → **Open in Terminal** → run `Get-ChildItem -Recurse | Unblock-File`. Details: [If Windows blocks the scripts](../README.md#if-windows-blocks-the-scripts).
+- **"Smart App Control blocked a file that may be unsafe" / the scripts won't open** → Windows blocks files downloaded from the internet. See [If Windows blocks the scripts](../../README.md#if-windows-blocks-the-scripts) in the main README.
 - **Antivirus deletes / blocks `goodbyedpi.exe` or `WinDivert`** → add the `goodbyedpi` folder, `C:\ProgramData\goodbyedpi-custom` and `C:\ProgramData\goodbyedpi-global` to your antivirus exclusions. It's a false positive; antiviruses don't like tools that intercept network packets.
 - **Global window says "service not found"** → run `service_global_create.cmd` first.
 - **"The service was created but isn't running" / "stopped right after starting"** → run the create script again and pick another setting; your GoodbyeDPI version may not support the chosen one. If none work, check your antivirus.
