@@ -16,13 +16,11 @@ Requirements
 
 Install
 
-    Download DiscordScreenShareEchoFix.ps1.
+    Download this folder (DiscordScreenShareEchoFix.ps1, Setup.cmd and Uninstall.cmd) and keep the files together. If Windows blocks them, see "If Windows blocks the scripts" in the main README.
 
     In Discord, start a screen share with sound. The audio session that causes the problem only exists while you are sharing, so it has to be running for the device list to show it.
 
-    Open PowerShell in the folder where you saved the file and run:
-
-    powershell -ExecutionPolicy Bypass -File .\DiscordScreenShareEchoFix.ps1
+    Double-click Setup.cmd. It runs the script with -ExecutionPolicy Bypass for this one run only, so you don't have to change any PowerShell setting. (Same thing by hand: powershell -ExecutionPolicy Bypass -File .\DiscordScreenShareEchoFix.ps1)
 
     Pick the devices to mute. Devices that currently carry Discord audio are highlighted:
 
@@ -34,13 +32,15 @@ Install
 
     Press R to refresh the list if you started the screen share after opening the setup.
 
-    Confirm. The script copies itself to %LOCALAPPDATA%\DiscordScreenShareEchoFix, creates a scheduled task named DiscordScreenShareEchoFix and starts it. You can delete the downloaded file afterwards.
+    Confirm. The script copies itself to %LOCALAPPDATA%\DiscordScreenShareEchoFix, creates a scheduled task named DiscordScreenShareEchoFix and starts it. Keep the downloaded folder if you want to change devices or uninstall with a double-click later.
 
 Done. From now on, every time you share your screen, Discord's session on those devices is muted within a second, including after restarting Discord or rebooting your PC.
 Change devices
 
-Run the setup again, the same way as in step 3. It shows your current selection. Pick new devices, or press Enter to keep the current ones. The scheduled task is deleted and created again each time.
+Double-click Setup.cmd again. It shows your current selection. Pick new devices, or press Enter to keep the current ones. The scheduled task is deleted and created again each time.
 Uninstall
+
+Double-click Uninstall.cmd. If you no longer have the downloaded folder, run this in PowerShell instead:
 
 powershell -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\DiscordScreenShareEchoFix\DiscordScreenShareEchoFix.ps1" -Uninstall
 
