@@ -578,20 +578,25 @@ function Install-Watcher($guards) {
     Unblock-File $Installed -ErrorAction SilentlyContinue
     Save-Guards $guards
 
+    # The full COMPUTER\user name: a bare $env:USERNAME is rejected when it is the same as the
+    # computer name, or after the account was renamed.
+    $user      = [Security.Principal.WindowsIdentity]::GetCurrent().Name
+
     # conhost --headless keeps the window hidden even when Windows Terminal is the default terminal.
     $psArgs    = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$Installed`" -Run"
     $action    = New-ScheduledTaskAction -Execute 'conhost.exe' -Argument "--headless powershell.exe $psArgs"
-    $trigger   = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
+    $trigger   = New-ScheduledTaskTrigger -AtLogOn -User $user
     $settings  = New-ScheduledTaskSettingsSet `
         -ExecutionTimeLimit ([TimeSpan]::Zero) `
         -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries `
         -RestartCount 3 -RestartInterval (New-TimeSpan -Minutes 1) `
         -MultipleInstances IgnoreNew
-    $principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Interactive -RunLevel Limited
+    $principal = New-ScheduledTaskPrincipal -UserId $user -LogonType Interactive -RunLevel Limited
 
+    # Stop here on failure, so setup doesn't report "Done" without a task.
     Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger `
-        -Settings $settings -Principal $principal -Force | Out-Null
-    Start-ScheduledTask -TaskName $TaskName
+        -Settings $settings -Principal $principal -Force -ErrorAction Stop | Out-Null
+    Start-ScheduledTask -TaskName $TaskName -ErrorAction Stop
 }
 
 # ---------------------------------------------------------------- modes
