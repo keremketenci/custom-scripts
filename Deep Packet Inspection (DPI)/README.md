@@ -29,7 +29,7 @@ Both tools come with the same set of scripts:
 
 ## Quick start
 
-1. Download the repository (**Code → Download ZIP**), extract it and open the `Deep Packet Inspection (DPI)` folder.
+1. Download the repository (**Code → Download ZIP**). Before extracting, right-click the zip → **Properties** → tick **Unblock** → **OK** (see [below](#if-windows-blocks-the-scripts)), then extract it and open the `Deep Packet Inspection (DPI)` folder.
 2. Open the [zapret](zapret) or [GoodbyeDPI](goodbyedpi) folder and follow its README. In short: copy `custom-files` into the tool's folder and double-click `service_custom_create.cmd`.
 
 ## Folder layout
@@ -44,6 +44,36 @@ goodbyedpi\
 ├─ valdik\                       ← original GoodbyeDPI + its scripts
 └─ README.md
 ```
+
+## If Windows blocks the scripts
+
+Windows marks files downloaded from the internet, and **Smart App Control** or SmartScreen may then refuse to run the scripts (*"Smart App Control blocked a file that may be unsafe"*). Remove the mark from the zip **before** extracting it:
+
+1. Right-click the downloaded zip → **Properties**.
+2. At the bottom of the **General** tab, tick **Unblock** → **OK**. (No Unblock checkbox? Then the file isn't marked; just continue.)
+3. Extract the zip. The extracted files won't be blocked.
+
+### Already extracted without unblocking?
+
+The extracted files carry the mark too. Two ways to fix it:
+
+**Option A, extract again (easiest):**
+
+1. Delete the extracted folder.
+2. Do steps 1–2 above on the zip (**Properties** → **Unblock** → **OK**).
+3. Extract the zip again.
+
+**Option B, unblock the extracted folder (no re-extracting):**
+
+1. Open the extracted folder.
+2. Right-click an empty spot inside it → **Open in Terminal**.
+3. Paste this line and press **Enter**:
+   ```
+   Get-ChildItem -Recurse | Unblock-File
+   ```
+4. Close the window. The scripts in this folder and all its subfolders will run now.
+
+Don't turn Smart App Control off for this: on many Windows versions it can't be turned back on without reinstalling Windows.
 
 ## Antivirus warnings
 

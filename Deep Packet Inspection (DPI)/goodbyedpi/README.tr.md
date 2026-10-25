@@ -127,6 +127,7 @@ Bunlar `C:\ProgramData` içindeki kopyaları da siler. Turkey ve valdik aynı se
 
 ## Sorun Giderme
 
+- **"Smart App Control blocked a file that may be unsafe" diyor / scriptler açılmıyor** → Windows internetten indirilen dosyaları engelliyor. Ya zip'in engelini kaldırıp (sağ tık → **Özellikler** → **Engellemeyi kaldır** → **Tamam**) tekrar çıkar, ya da tekrar çıkarmak istemiyorsan çıkardığın klasörü aç → boş bir yere sağ tıkla → **Terminalde aç** → `Get-ChildItem -Recurse | Unblock-File` komutunu çalıştır. Ayrıntılar: [Windows scriptleri engellerse](../README.tr.md#windows-scriptleri-engellerse).
 - **Antivirüs `goodbyedpi.exe` veya `WinDivert`'i siliyor / engelliyor** → `goodbyedpi` klasörünü, `C:\ProgramData\goodbyedpi-custom` ve `C:\ProgramData\goodbyedpi-global` klasörlerini antivirüs istisnalarına ekle. Bu yanlış alarm, ağ paketlerine müdahale ettiği için antivirüsler sevmiyor.
 - **Global penceresi "servisi bulunamadi" diyor** → önce `service_global_create.cmd`'yi çalıştır.
 - **"Servis olusturuldu ama calismiyor" / "baslar baslamaz durdu" diyor** → create dosyasını tekrar çalıştırıp başka bir ayar seç, kullandığın GoodbyeDPI sürümü seçilen ayarı desteklemiyor olabilir. Hiçbiri olmazsa antivirüsünü kontrol et.

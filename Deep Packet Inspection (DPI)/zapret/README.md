@@ -22,7 +22,7 @@ This package already includes a `zapret-win-bundle-master` folder, so **you can 
 But zapret gets updated regularly (fixes, better bypass methods), and the included copy may be outdated by the time you get it. If you want the latest version:
 
 1. Go to https://github.com/bol-van/zapret-win-bundle
-2. Click **Code → Download ZIP** and extract it.
+2. Click **Code → Download ZIP**. Before extracting, right-click the zip → **Properties** → tick **Unblock** → **OK**, then extract it.
 3. Use that new `zapret-win-bundle-master` folder instead of the included one in the steps below.
 
 > ℹ️ **The scripts adapt to newer versions:** they copy the DLLs and drivers with wildcards instead of exact names, skip filter files that a newer version no longer has (if the Discord voice filter is missing, you get a warning), and check with `winws --dry-run` that the version accepts the chosen setting **before** touching any service. If it doesn't, you're asked to pick another setting.
@@ -101,6 +101,7 @@ These also delete the copies in `C:\ProgramData`. After that you can delete the 
 
 ## Troubleshooting
 
+- **"Smart App Control blocked a file that may be unsafe" / the scripts won't open** → Windows blocks files downloaded from the internet. Either unblock the zip (right-click → **Properties** → tick **Unblock** → **OK**) and extract it again, or, if you don't want to extract again, open the extracted folder → right-click an empty spot → **Open in Terminal** → run `Get-ChildItem -Recurse | Unblock-File`. Details: [If Windows blocks the scripts](../README.md#if-windows-blocks-the-scripts).
 - **Antivirus deletes / blocks `winws.exe` or `WinDivert`** → add the `zapret-win-bundle-master`, `C:\ProgramData\zapret-custom` and `C:\ProgramData\zapret-global` folders to your antivirus exclusions. It's a false positive (it intercepts network packets, which antiviruses don't like).
 - **Global window says "service not found"** → run `service_global_create.cmd` first.
 - **"This zapret version doesn't accept the chosen setting"** → pick another number. If it accepts none of them, use the included `zapret-win-bundle-master`.

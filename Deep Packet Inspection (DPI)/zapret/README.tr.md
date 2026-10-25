@@ -22,7 +22,7 @@ Bu paketin içinde `zapret-win-bundle-master` klasörü zaten hazır geliyor, ya
 Ama zapret sık sık güncelleniyor (hata düzeltmeleri, daha iyi engel aşma yöntemleri) ve paketteki sürüm sana ulaştığında eskimiş olabilir. En güncel sürümü kullanmak istersen:
 
 1. https://github.com/bol-van/zapret-win-bundle adresine git.
-2. **Code → Download ZIP**'e tıkla ve zip'i klasöre çıkar.
+2. **Code → Download ZIP**'e tıkla. Çıkarmadan önce zip'e sağ tıkla → **Özellikler** → **Engellemeyi kaldır**'ı işaretle → **Tamam**, sonra zip'i klasöre çıkar.
 3. Aşağıdaki adımlarda hazır gelen klasör yerine bu yeni `zapret-win-bundle-master` klasörünü kullan.
 
 > ℹ️ **Scriptler yeni sürümlere uyum sağlar:** DLL ve sürücü dosyalarını tam adlarıyla değil joker karakterle kopyalar. Yeni sürümde artık olmayan filtre dosyalarını atlar, Discord ses filtresi eksikse uyarı verir. Seçilen ayarı herhangi bir servise dokunmadan **önce** `winws --dry-run` ile o sürümün kabul edip etmediğini kontrol eder. Kabul etmezse başka bir ayar seçmeni ister.
@@ -101,6 +101,7 @@ Bunlar `C:\ProgramData` içindeki kopyaları da siler. Sonra klasörü silebilir
 
 ## Sorun Giderme
 
+- **"Smart App Control blocked a file that may be unsafe" diyor / scriptler açılmıyor** → Windows internetten indirilen dosyaları engelliyor. Ya zip'in engelini kaldırıp (sağ tık → **Özellikler** → **Engellemeyi kaldır** → **Tamam**) tekrar çıkar, ya da tekrar çıkarmak istemiyorsan çıkardığın klasörü aç → boş bir yere sağ tıkla → **Terminalde aç** → `Get-ChildItem -Recurse | Unblock-File` komutunu çalıştır. Ayrıntılar: [Windows scriptleri engellerse](../README.tr.md#windows-scriptleri-engellerse).
 - **Antivirüs `winws.exe` veya `WinDivert`'i siliyor / engelliyor** → `zapret-win-bundle-master`, `C:\ProgramData\zapret-custom` ve `C:\ProgramData\zapret-global` klasörlerini antivirüs istisnalarına ekle. Yanlış alarm (ağ paketlerine müdahale ettiği için antivirüsler sevmiyor).
 - **Global penceresi "servisi bulunamadi" diyor** → önce `service_global_create.cmd`'yi çalıştır.
 - **"Bu zapret surumu secilen ayari kabul etmiyor" diyor** → başka bir numara seç. Hiçbirini kabul etmiyorsa hazır gelen `zapret-win-bundle-master`'ı kullan.
