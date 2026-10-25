@@ -22,13 +22,14 @@ Install
 
     Double-click Setup.cmd. It runs the script with -ExecutionPolicy Bypass for this one run only, so you don't have to change any PowerShell setting. (Same thing by hand: powershell -ExecutionPolicy Bypass -File .\DiscordScreenShareEchoFix.ps1)
 
-    Pick the devices to mute. Devices that currently carry Discord audio are highlighted:
+    Pick the devices to mute. Only playback devices are listed (muting Discord on a microphone would mute you). Devices that currently carry Discord audio are highlighted:
 
       1) Speakers (Realtek(R) Audio)
       2) Headphones (SteelSeries Sonar - Gaming)
       3) Headphones (SteelSeries Sonar - Chat)   <- Discord audio here (0/2 muted)
-      4) Microphone (SteelSeries Sonar - Microphone)
     Device numbers to mute (e.g. 2,5), R = refresh, Q = quit: 3
+
+    Don't pick the device you listen to Discord on, or you won't hear your friends. Pick the one the screen share picks up your friends' voices from.
 
     Press R to refresh the list if you started the screen share after opening the setup.
 
@@ -44,7 +45,7 @@ Double-click Uninstall.cmd. If you no longer have the downloaded folder, run thi
 
 powershell -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\DiscordScreenShareEchoFix\DiscordScreenShareEchoFix.ps1" -Uninstall
 
-This removes the scheduled task and the installed files.
+This removes the scheduled task and the installed files, and unmutes Discord on the selected devices again (Windows remembers the mute per app, so it would stay otherwise). Discord has to be running and in a voice call for that, because Windows only shows its audio sessions while it uses the devices; if it isn't, the uninstall warns you first.
 Other options
 Command	What it does
 -List	Lists audio devices and the Discord sessions on them
@@ -66,3 +67,4 @@ Troubleshooting
     Watch it work: stop the task with Stop-ScheduledTask DiscordScreenShareEchoFix. Then run the installed script with -Run in a normal PowerShell window and start a screen share. You should see Watching: ... and Muted: ... lines. Close the window and start the task again with Start-ScheduledTask DiscordScreenShareEchoFix.
     Wrong device / nothing gets muted: run the setup again while screen sharing and pick the highlighted device.
     Unmuted it by hand? It stays unmuted until the next screen share or a device change. The script does not fight you.
+    Your microphone got muted (older versions only): older versions also listed microphones, and picking one muted Discord's microphone input. Join a voice call in Discord and run Setup.cmd with the new version: it unmutes Discord on those microphones again before showing the list.

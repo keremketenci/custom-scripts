@@ -215,18 +215,25 @@ namespace WA
             catch { return false; }
         }
 
-        // Lists every active device and the Discord sessions on it.
+        // Device kinds for Scan. Only playback devices are ever muted: Discord's session on a
+        // recording device is your microphone input, muting it mutes you.
+        public const uint Playback = 0, Recording = 1;
+
+        public const int ModeList = 0, ModeMute = 1, ModeUnmute = 2;
+
+        // Lists every active playback device and the Discord sessions on it.
         public static List<DeviceInfo> ListDevices(string prefix)
         {
             List<DeviceInfo> info = new List<DeviceInfo>();
-            Scan(null, prefix, false, null, info);
+            Scan(Playback, null, prefix, ModeList, null, info);
             return info;
         }
 
-        // mute=false: only fills 'info' with every active device and its Discord sessions.
-        // mute=true:  mutes matching sessions that are not muted yet, on devices matching 'devs'.
-        // Returns the number of sessions that were newly muted.
-        public static int Scan(string[] devs, string prefix, bool mute, List<string> log, List<DeviceInfo> info)
+        // ModeList:   only fills 'info' with every active device of this kind and its Discord sessions.
+        // ModeMute:   mutes matching sessions that are not muted yet, on devices matching 'devs'.
+        // ModeUnmute: unmutes matching sessions, on devices matching 'devs' (undoes ModeMute).
+        // Returns the number of sessions that were changed.
+        public static int Scan(uint flow, string[] devs, string prefix, int mode, List<string> log, List<DeviceInfo> info)
         {
             int changed = 0;
             Found = 0;
@@ -235,7 +242,7 @@ namespace WA
             IMMDeviceCollection col = null;
             try
             {
-                en.EnumAudioEndpoints(2, 1, out col); // all data flows, active devices only
+                en.EnumAudioEndpoints(flow, 1, out col); // active devices only
                 uint n;
                 col.GetCount(out n);
 
@@ -248,7 +255,7 @@ namespace WA
                     {
                         col.Item(i, out dev);
                         string name = FriendlyName(dev);
-                        if (mute && !Matches(name, devs)) continue;
+                        if (mode != ModeList && !Matches(name, devs)) continue;
 
                         DeviceInfo d = new DeviceInfo();
                         d.Name = name;
@@ -277,13 +284,14 @@ namespace WA
                                 ISimpleAudioVolume vol = (ISimpleAudioVolume)ctl;
                                 bool m;
                                 vol.GetMute(out m);
-                                if (mute && !m)
+                                bool want = mode == ModeMute ? true : mode == ModeUnmute ? false : m;
+                                if (m != want)
                                 {
                                     Guid g = Guid.Empty;
-                                    vol.SetMute(true, ref g);
-                                    m = true;
+                                    vol.SetMute(want, ref g);
+                                    m = want;
                                     changed++;
-                                    if (log != null) log.Add("Muted: " + name + " (pid " + pid + ")");
+                                    if (log != null) log.Add((want ? "Muted: " : "Unmuted: ") + name + " (pid " + pid + ")");
                                 }
                                 if (m) d.Muted++;
                             }
@@ -370,7 +378,7 @@ namespace WA
         static void MuteNow(string[] devs, string prefix)
         {
             List<string> log = new List<string>();
-            try { Muter.Scan(devs, prefix, true, log, null); } catch { }
+            try { Muter.Scan(Muter.Playback, devs, prefix, Muter.ModeMute, log, null); } catch { }
             foreach (string l in log) Log(l);
         }
 
@@ -379,7 +387,7 @@ namespace WA
             IMMDeviceCollection col = null;
             try
             {
-                en.EnumAudioEndpoints(2, 1, out col);
+                en.EnumAudioEndpoints(Muter.Playback, 1, out col);
                 uint n;
                 col.GetCount(out n);
                 for (uint i = 0; i < n; i++)
@@ -484,6 +492,16 @@ function Get-SavedDevices {
     catch { return @() }
 }
 
+# Unmutes Discord's sessions on the given devices of one kind (playback or recording).
+# Windows only lists a session while Discord uses that device, so Discord has to be running
+# (and in a voice call, for the microphone).
+function Restore-Discord([string[]]$devs, [uint32]$flow) {
+    if (-not $devs) { return }
+    $log = New-Object 'System.Collections.Generic.List[string]'
+    [WA.Muter]::Scan($flow, $devs, $ProcessPrefix, [WA.Muter]::ModeUnmute, $log, $null) | Out-Null
+    $log | ForEach-Object { Write-Host $_ }
+}
+
 # Kills the background copy started by the scheduled task (if any), so it can be replaced.
 function Stop-Background {
     Stop-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue
@@ -547,7 +565,16 @@ function Install-Watcher([string[]]$selected) {
 # ---------------------------------------------------------------- modes
 
 if ($Uninstall) {
+    $saved = Get-SavedDevices
+    if ($saved -and -not (Get-Process "$ProcessPrefix*" -ErrorAction SilentlyContinue)) {
+        Write-Host 'Discord is not running, so its muted sessions cannot be unmuted now.' -ForegroundColor Yellow
+        Write-Host 'Start Discord, join a voice call and run Uninstall.cmd again to restore its sound.'
+        if ((Read-Host 'Uninstall anyway? (y/N)').Trim() -notmatch '^[Yy]') { return }
+    }
     Remove-Task
+    # Windows remembers the mute per app, so undo it; otherwise Discord stays muted there.
+    Restore-Discord $saved ([WA.Muter]::Playback)
+    Restore-Discord $saved ([WA.Muter]::Recording)
     Remove-Item $InstallDir -Recurse -Force -ErrorAction SilentlyContinue
     Write-Host 'DiscordScreenShareEchoFix removed.' -ForegroundColor Green
     return
@@ -567,7 +594,7 @@ if ($Run -or $Once) {
 
     if ($Once) {
         $log = New-Object 'System.Collections.Generic.List[string]'
-        [WA.Muter]::Scan($Devices, $ProcessPrefix, $true, $log, $null) | Out-Null
+        [WA.Muter]::Scan([WA.Muter]::Playback, $Devices, $ProcessPrefix, [WA.Muter]::ModeMute, $log, $null) | Out-Null
         $log | ForEach-Object { Write-Host $_ }
         if ($log.Count -eq 0) {
             if ([WA.Muter]::Found -gt 0) { Write-Host 'Discord sessions were already muted.' }
@@ -600,6 +627,9 @@ if ($Run -or $Once) {
 # ---------------------------------------------------------------- setup (no parameters)
 
 $saved = Get-SavedDevices
+
+# Older versions also listed recording devices, and muting Discord on one muted your microphone.
+Restore-Discord $saved ([WA.Muter]::Recording)
 
 Write-Host ''
 Write-Host 'DiscordScreenShareEchoFix setup' -ForegroundColor Cyan
