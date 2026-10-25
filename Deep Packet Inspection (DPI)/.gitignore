@@ -1,0 +1,9 @@
+# Local Claude Code settings
+.claude/
+
+# Created by the scripts when they're run (saved language and setting choice)
+language.txt
+profile.txt
+
+# blockcheck output, contains local paths and connection details
+blockcheck.log
