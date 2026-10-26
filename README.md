@@ -6,16 +6,17 @@ A collection of ready-made scripts and setups. Each project lives in its own fol
 
 ## Projects
 
-| Project | What it does | Platform |
-|---|---|---|
-| [Deep Packet Inspection (DPI)](Deep%20Packet%20Inspection%20%28DPI%29) | Get past DPI blocks (e.g. the Discord block in Turkey) with zapret or GoodbyeDPI. Double-click installers, a settings menu for different internet providers, English / Turkish. | Windows 11 |
+| Project | What it does | Download | Platform |
+|---|---|---|---|
+| [Deep Packet Inspection (DPI)](Deep%20Packet%20Inspection%20%28DPI%29) | Get past DPI blocks (e.g. the Discord block in Turkey) with zapret or GoodbyeDPI. Double-click installers, a settings menu for different internet providers, English / Turkish. | `zapret.zip` or `goodbyedpi.zip` from the newest **DPI bypass scripts** release | Windows 11 |
+| [Default Audio Device Guard](default-audio-device-guard) | Stops Windows from switching your default audio devices on its own. | `DefaultAudioDeviceGuard.zip` | Windows 10 / 11 |
+| [Discord Screen Share Echo Fix](discord-screenshare-echo-fix) | Fixes the echo viewers hear when you share your screen with sound in Discord while using a virtual audio mixer. | `DiscordScreenShareEchoFix.zip` | Windows 10 / 11 |
 
 ## How to use
 
-1. Download the repository: **Code → Download ZIP**. Before extracting, right-click the zip → **Properties** → tick **Unblock** → **OK** (see [below](#if-windows-blocks-the-scripts)), then extract it.
-2. Open the folder of the project you need and follow its README.
-
-You only need the folder of the project you're using; the others can be ignored or deleted.
+1. Open [Releases](https://github.com/keremketenci/custom-scripts/releases) and download the zip of the project you need from its newest release (see the table above). Each zip contains only that project.
+2. Before extracting, right-click the zip → **Properties** → tick **Unblock** → **OK** (see [below](#if-windows-blocks-the-scripts)), then extract it.
+3. Follow the README inside the extracted folder.
 
 ## If Windows blocks the scripts
 

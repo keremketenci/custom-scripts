@@ -29,8 +29,8 @@ Both tools come with the same set of scripts:
 
 ## Quick start
 
-1. Download the repository (**Code → Download ZIP**). Before extracting, unblock the zip as described in [If Windows blocks the scripts](../README.md#if-windows-blocks-the-scripts) in the main README, then extract it and open the `Deep Packet Inspection (DPI)` folder.
-2. Open the [zapret](zapret) or [GoodbyeDPI](goodbyedpi) folder and follow its README. In short: copy `custom-files` into the tool's folder and double-click `service_custom_create.cmd`.
+1. Open [Releases](https://github.com/keremketenci/custom-scripts/releases) and download `zapret.zip` or `goodbyedpi.zip` from the newest **DPI bypass scripts** release. You only need one; not sure → zapret. Before extracting, unblock the zip as described in [If Windows blocks the scripts](https://github.com/keremketenci/custom-scripts#if-windows-blocks-the-scripts) in the main README, then extract it.
+2. Open the extracted [zapret](zapret) or [goodbyedpi](goodbyedpi) folder and follow its README. In short: copy `custom-files` into the tool's folder and double-click `service_custom_create.cmd`.
 
 ## Folder layout
 
@@ -38,6 +38,7 @@ Both tools come with the same set of scripts:
 zapret\
 ├─ custom-files\                 ← the scripts
 ├─ zapret-win-bundle-master\     ← zapret itself
+├─ zapret-win-bundle-master.zip  ← untouched original
 └─ README.md
 goodbyedpi\
 ├─ turkey\                       ← GoodbyeDPI-Turkey fork + its scripts

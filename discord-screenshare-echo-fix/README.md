@@ -16,7 +16,7 @@ Requirements
 
 Install
 
-    Download this folder (DiscordScreenShareEchoFix.ps1, Setup.cmd and Uninstall.cmd) and keep the files together. If Windows blocks them, see "If Windows blocks the scripts" in the main README.
+    Download DiscordScreenShareEchoFix.zip from the newest DiscordScreenShareEchoFix release on the Releases page (https://github.com/keremketenci/custom-scripts/releases). Before extracting, unblock it as described in "If Windows blocks the scripts" in the main README (https://github.com/keremketenci/custom-scripts#if-windows-blocks-the-scripts), then extract it and keep the files together.
 
     In Discord, start a screen share with sound. The audio session that causes the problem only exists while you are sharing, so it has to be running for the device list to show it.
 

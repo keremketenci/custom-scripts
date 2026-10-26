@@ -129,7 +129,7 @@ Already deleted the folder? Each install also has its own uninstaller: double-cl
 
 ## Troubleshooting
 
-- **"Smart App Control blocked a file that may be unsafe" / the scripts won't open** → Windows blocks files downloaded from the internet. See [If Windows blocks the scripts](../../README.md#if-windows-blocks-the-scripts) in the main README.
+- **"Smart App Control blocked a file that may be unsafe" / the scripts won't open** → Windows blocks files downloaded from the internet. See [If Windows blocks the scripts](https://github.com/keremketenci/custom-scripts#if-windows-blocks-the-scripts) in the main README.
 - **Antivirus deletes / blocks `goodbyedpi.exe` or `WinDivert`** → add the `goodbyedpi` folder, `C:\ProgramData\goodbyedpi-custom` and `C:\ProgramData\goodbyedpi-global` to your antivirus exclusions. It's a false positive; antiviruses don't like tools that intercept network packets.
 - **Global window says "service not found"** → run `service_global_create.cmd` first.
 - **"The service was created but isn't running" / "stopped right after starting"** → run the create script again and pick another setting; your GoodbyeDPI version may not support the chosen one. If none work, check your antivirus.

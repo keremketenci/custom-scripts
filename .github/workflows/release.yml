@@ -1,0 +1,76 @@
+# Publishes a release with the zip of one project when its tag is pushed:
+#   discord-screenshare-echo-fix-v1.0.0  ->  DiscordScreenShareEchoFix.zip
+#   default-audio-device-guard-v1.0.0    ->  DefaultAudioDeviceGuard.zip
+#   dpi-v1.0.0                           ->  zapret.zip + goodbyedpi.zip
+# git archive packs the files byte for byte, so the .cmd files keep their CRLF line endings.
+name: Release
+
+on:
+  push:
+    tags:
+      - 'discord-screenshare-echo-fix-v*'
+      - 'default-audio-device-guard-v*'
+      - 'dpi-v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the zips
+        shell: bash
+        run: |
+          tag="$GITHUB_REF_NAME"
+          version="${tag##*-v}"
+          mkdir dist
+          case "$tag" in
+            discord-screenshare-echo-fix-v*)
+              name="DiscordScreenShareEchoFix"
+              dir="discord-screenshare-echo-fix"
+              git archive --format=zip --prefix="$name/" -o "dist/$name.zip" "HEAD:$dir"
+              download="\`$name.zip\`"
+              ;;
+            default-audio-device-guard-v*)
+              name="DefaultAudioDeviceGuard"
+              dir="default-audio-device-guard"
+              git archive --format=zip --prefix="$name/" -o "dist/$name.zip" "HEAD:$dir"
+              download="\`$name.zip\`"
+              ;;
+            dpi-v*)
+              name="DPI bypass scripts"
+              dir="Deep Packet Inspection (DPI)"
+              # Includes the untouched .zip copies next to the tool folders, to go back to the original
+              git archive --format=zip --prefix=zapret/ -o dist/zapret.zip "HEAD:$dir/zapret"
+              git archive --format=zip --prefix=goodbyedpi/ -o dist/goodbyedpi.zip "HEAD:$dir/goodbyedpi"
+              download="\`zapret.zip\` **or** \`goodbyedpi.zip\` (you only need one; not sure → zapret)"
+              ;;
+          esac
+
+          readme="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/tree/$tag/${dir// /%20}"
+          readme="${readme//(/%28}"
+          readme="${readme//)/%29}"
+          unblock="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY#if-windows-blocks-the-scripts"
+          {
+            echo "title=$name v$version"
+          } >> "$GITHUB_OUTPUT"
+          cat > dist/notes.md <<EOF
+          ## Download
+
+          Download $download below.
+
+          1. Before extracting, right-click the zip → **Properties** → tick **Unblock** → **OK** ([why](${unblock})).
+          2. Extract it and follow the README inside, or read it here: [README](${readme}).
+          EOF
+          ls -la dist
+        id: build
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ steps.build.outputs.title }}
+          body_path: dist/notes.md
+          files: dist/*.zip
+          make_latest: false

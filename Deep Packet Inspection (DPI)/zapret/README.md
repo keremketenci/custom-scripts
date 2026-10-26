@@ -22,12 +22,12 @@ This package already includes a `zapret-win-bundle-master` folder, so **you can 
 But zapret gets updated regularly (fixes, better bypass methods), and the included copy may be outdated by the time you get it. If you want the latest version:
 
 1. Go to https://github.com/bol-van/zapret-win-bundle
-2. Click **Code → Download ZIP**. Before extracting, unblock the zip as described in [If Windows blocks the scripts](../../README.md#if-windows-blocks-the-scripts), then extract it.
+2. Click **Code → Download ZIP**. Before extracting, unblock the zip as described in [If Windows blocks the scripts](https://github.com/keremketenci/custom-scripts#if-windows-blocks-the-scripts), then extract it.
 3. Use that new `zapret-win-bundle-master` folder instead of the included one in the steps below.
 
 > ℹ️ **The scripts adapt to newer versions:** they copy the DLLs and drivers with wildcards instead of exact names, skip filter files that a newer version no longer has (if the Discord voice filter is missing, you get a warning), and check with `winws --dry-run` that the version accepts the chosen setting **before** touching any service. If it doesn't, you're asked to pick another setting.
 >
-> ⚠️ **Remaining risk:** if a future zapret version drops `winws.exe` entirely (zapret2 / `winws2.exe` uses a different syntax) or rejects all the settings, the create scripts show an `ERROR:` message explaining this. In that case, just go back to the **included** `zapret-win-bundle-master` folder; the scripts were made for that version.
+> ⚠️ **Remaining risk:** if a future zapret version drops `winws.exe` entirely (zapret2 / `winws2.exe` uses a different syntax) or rejects all the settings, the create scripts show an `ERROR:` message explaining this. In that case, just go back to the **included** `zapret-win-bundle-master` folder; the scripts were made for that version. The `zapret-win-bundle-master.zip` next to it is an untouched copy if you break the folder.
 
 ### 1. Copy the files
 
@@ -103,7 +103,7 @@ Already deleted the folder? Each install also has its own uninstaller: double-cl
 
 ## Troubleshooting
 
-- **"Smart App Control blocked a file that may be unsafe" / the scripts won't open** → Windows blocks files downloaded from the internet. See [If Windows blocks the scripts](../../README.md#if-windows-blocks-the-scripts) in the main README.
+- **"Smart App Control blocked a file that may be unsafe" / the scripts won't open** → Windows blocks files downloaded from the internet. See [If Windows blocks the scripts](https://github.com/keremketenci/custom-scripts#if-windows-blocks-the-scripts) in the main README.
 - **Antivirus deletes / blocks `winws.exe` or `WinDivert`** → add the `zapret-win-bundle-master`, `C:\ProgramData\zapret-custom` and `C:\ProgramData\zapret-global` folders to your antivirus exclusions. It's a false positive (it intercepts network packets, which antiviruses don't like).
 - **Says "The WinDivert driver couldn't be loaded" (error 1058)** → it's not an antivirus problem, adding exclusions won't help. Restart the PC and run the create script again. If it keeps happening, remove other DPI tools (other zapret packages, GoodbyeDPI) or check your anti-cheat (Vanguard, FACEIT).
 - **Global window says "service not found"** → run `service_global_create.cmd` first.

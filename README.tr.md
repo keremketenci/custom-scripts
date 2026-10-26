@@ -6,16 +6,17 @@ Hazır script ve kurulumlardan oluşan bir koleksiyon. Her proje kendi klasörü
 
 ## Projeler
 
-| Proje | Ne yapar | Platform |
-|---|---|---|
-| [Deep Packet Inspection (DPI)](Deep%20Packet%20Inspection%20%28DPI%29) | zapret ya da GoodbyeDPI ile DPI engellerini (örn. Türkiye'deki Discord engelini) aşar. Çift tıklamayla kurulum, farklı internet sağlayıcıları için ayar menüsü, İngilizce / Türkçe. | Windows 11 |
+| Proje | Ne yapar | İndir | Platform |
+|---|---|---|---|
+| [Deep Packet Inspection (DPI)](Deep%20Packet%20Inspection%20%28DPI%29) | zapret ya da GoodbyeDPI ile DPI engellerini (örn. Türkiye'deki Discord engelini) aşar. Çift tıklamayla kurulum, farklı internet sağlayıcıları için ayar menüsü, İngilizce / Türkçe. | En yeni **DPI bypass scripts** sürümünden `zapret.zip` ya da `goodbyedpi.zip` | Windows 11 |
+| [Default Audio Device Guard](default-audio-device-guard) | Windows'un varsayılan ses cihazlarını kendi kendine değiştirmesini engeller. (README İngilizce) | `DefaultAudioDeviceGuard.zip` | Windows 10 / 11 |
+| [Discord Screen Share Echo Fix](discord-screenshare-echo-fix) | Sanal ses mikseri kullanırken Discord'da sesli ekran paylaşımında izleyenlerin duyduğu yankıyı düzeltir. (README İngilizce) | `DiscordScreenShareEchoFix.zip` | Windows 10 / 11 |
 
 ## Nasıl kullanılır
 
-1. Depoyu indir: **Code → Download ZIP**. Çıkarmadan önce zip'e sağ tıkla → **Özellikler** → **Engellemeyi kaldır**'ı işaretle → **Tamam** ([aşağıda](#windows-scriptleri-engellerse) anlatıldı), sonra zip'i çıkar.
-2. İhtiyacın olan projenin klasörünü aç ve içindeki README'yi takip et.
-
-Sadece kullandığın projenin klasörüne ihtiyacın var, diğerlerini görmezden gelebilir ya da silebilirsin.
+1. [Releases](https://github.com/keremketenci/custom-scripts/releases) sayfasını aç ve ihtiyacın olan projenin en yeni sürümünden zip'ini indir (yukarıdaki tabloya bak). Her zip'te sadece o proje var.
+2. Çıkarmadan önce zip'e sağ tıkla → **Özellikler** → **Engellemeyi kaldır**'ı işaretle → **Tamam** ([aşağıda](#windows-scriptleri-engellerse) anlatıldı), sonra zip'i çıkar.
+3. Çıkan klasördeki README'yi takip et.
 
 ## Windows scriptleri engellerse
 

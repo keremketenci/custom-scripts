@@ -29,8 +29,8 @@ Windows 11'de DPI engellerini (örneğin Türkiye'deki Discord engelini) aşmak 
 
 ## Hızlı başlangıç
 
-1. Depoyu indir (**Code → Download ZIP**). Çıkarmadan önce zip'in engelini ana README'deki [Windows scriptleri engellerse](../README.tr.md#windows-scriptleri-engellerse) bölümünde anlatıldığı gibi kaldır, sonra zip'i çıkar ve `Deep Packet Inspection (DPI)` klasörünü aç.
-2. [zapret](zapret) ya da [GoodbyeDPI](goodbyedpi) klasörünü aç ve içindeki README'yi takip et. Kısaca: `custom-files` içindekileri aracın klasörüne kopyala ve `service_custom_create.cmd`'ye çift tıkla.
+1. [Releases](https://github.com/keremketenci/custom-scripts/releases) sayfasını aç ve en yeni **DPI bypass scripts** sürümünden `zapret.zip` ya da `goodbyedpi.zip`'i indir. Sadece birine ihtiyacın var; emin değilsen zapret. Çıkarmadan önce zip'in engelini ana README'deki [Windows scriptleri engellerse](https://github.com/keremketenci/custom-scripts/blob/main/README.tr.md#windows-scriptleri-engellerse) bölümünde anlatıldığı gibi kaldır, sonra zip'i çıkar.
+2. Çıkan [zapret](zapret) ya da [goodbyedpi](goodbyedpi) klasörünü aç ve içindeki README'yi takip et. Kısaca: `custom-files` içindekileri aracın klasörüne kopyala ve `service_custom_create.cmd`'ye çift tıkla.
 
 ## Klasör yapısı
 
@@ -38,6 +38,7 @@ Windows 11'de DPI engellerini (örneğin Türkiye'deki Discord engelini) aşmak 
 zapret\
 ├─ custom-files\                 ← scriptler
 ├─ zapret-win-bundle-master\     ← zapret'in kendisi
+├─ zapret-win-bundle-master.zip  ← orijinal yedek
 └─ README.md
 goodbyedpi\
 ├─ turkey\                       ← GoodbyeDPI-Turkey forku + scriptleri

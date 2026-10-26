@@ -129,7 +129,7 @@ Klasörü zaten sildin mi? Her kurulumun kendi kaldırıcısı da var: `C:\Progr
 
 ## Sorun Giderme
 
-- **"Smart App Control blocked a file that may be unsafe" diyor / scriptler açılmıyor** → Windows internetten indirilen dosyaları engelliyor. Ana README'deki [Windows scriptleri engellerse](../../README.tr.md#windows-scriptleri-engellerse) bölümüne bak.
+- **"Smart App Control blocked a file that may be unsafe" diyor / scriptler açılmıyor** → Windows internetten indirilen dosyaları engelliyor. Ana README'deki [Windows scriptleri engellerse](https://github.com/keremketenci/custom-scripts/blob/main/README.tr.md#windows-scriptleri-engellerse) bölümüne bak.
 - **Antivirüs `goodbyedpi.exe` veya `WinDivert`'i siliyor / engelliyor** → `goodbyedpi` klasörünü, `C:\ProgramData\goodbyedpi-custom` ve `C:\ProgramData\goodbyedpi-global` klasörlerini antivirüs istisnalarına ekle. Bu yanlış alarm, ağ paketlerine müdahale ettiği için antivirüsler sevmiyor.
 - **Global penceresi "servisi bulunamadi" diyor** → önce `service_global_create.cmd`'yi çalıştır.
 - **"Servis olusturuldu ama calismiyor" / "baslar baslamaz durdu" diyor** → create dosyasını tekrar çalıştırıp başka bir ayar seç, kullandığın GoodbyeDPI sürümü seçilen ayarı desteklemiyor olabilir. Hiçbiri olmazsa antivirüsünü kontrol et.

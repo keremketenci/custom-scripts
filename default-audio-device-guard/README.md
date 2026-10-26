@@ -27,7 +27,7 @@ It can guard each of these four separately (the same ones you see in the Sound c
 
 ## Install
 
-1. Download this folder (`DefaultAudioDeviceGuard.ps1`, `Setup.cmd` and `Uninstall.cmd`) and keep the files together. If Windows blocks them, see [If Windows blocks the scripts](../README.md#if-windows-blocks-the-scripts) in the main README.
+1. Download `DefaultAudioDeviceGuard.zip` from the newest **DefaultAudioDeviceGuard** release on the [Releases](https://github.com/keremketenci/custom-scripts/releases) page. Before extracting, unblock it as described in [If Windows blocks the scripts](https://github.com/keremketenci/custom-scripts#if-windows-blocks-the-scripts), then extract it and keep the files together.
 2. Connect your audio devices and start the apps that create virtual devices (e.g. Wave Link), so they show up in the list.
 3. Double-click `Setup.cmd`. It runs the script with `-ExecutionPolicy Bypass` for this one run only, so you don't have to change any PowerShell setting.
 4. The setup lists your playback and recording devices and shows which ones are the defaults now:
