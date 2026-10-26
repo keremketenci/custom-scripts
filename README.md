@@ -18,6 +18,8 @@ A collection of ready-made scripts and setups. Each project lives in its own fol
 2. Before extracting, right-click the zip → **Properties** → tick **Unblock** → **OK** (see [below](#if-windows-blocks-the-scripts)), then extract it.
 3. Follow the README inside the extracted folder.
 
+After installing, you can delete the extracted folder: every project copies what it needs to an install folder on your PC, including its own uninstaller. The project's README says where.
+
 ## If Windows blocks the scripts
 
 Windows marks files downloaded from the internet, and **Smart App Control** or SmartScreen may then refuse to run the scripts (*"Smart App Control blocked a file that may be unsafe"*). Remove the mark from the zip **before** extracting it:

@@ -52,8 +52,6 @@ Seçtiğin sürümün `custom-files` klasörünün **içindeki her şeyi** aynı
 
 Yani `service_custom_create.cmd` ile `x86_64` klasörü yan yana durmalı.
 
-> ℹ️ Create dosyaları gerekli dosyaları `C:\ProgramData\goodbyedpi-custom` ve `C:\ProgramData\goodbyedpi-global` klasörlerine kopyalıyor, servisler oradan çalışıyor. Kurduktan sonra klasörü taşıyabilirsin. Ama site listesini düzenlemek için saklaman iyi olur. Onsuz kaldırmak için o klasörlerdeki `uninstall.cmd`'yi kullan.
-
 ### 2. Servisleri kur
 
 GoodbyeDPI klasöründe şu dosyalara **çift tıkla** ve yönetici (UAC) uyarısında **Evet**'e bas:
@@ -66,6 +64,17 @@ GoodbyeDPI klasöründe şu dosyalara **çift tıkla** ve yönetici (UAC) uyarı
 `Kuruldu.` / `GoodbyeDPI Global servisi olusturuldu.` yazısını görünce (İngilizce seçtiysen `Installed.` / `GoodbyeDPI Global service created.`) bir tuşa basıp pencereyi kapatabilirsin. Bir şey ters giderse `HATA:` (İngilizce'de `ERROR:`) ile başlayan bir mesaj ve ne yapman gerektiği yazar.
 
 > ℹ️ Eski scriptlerin kurduğu `GoodbyeDPI` ve `GoodbyeDPI-discord` servisleri varsa `service_custom_create.cmd` onları otomatik kaldırır. Aynı trafiği iki kez işlemesinler diye.
+
+### 3. Kurduktan sonra: indirdiğin klasörü silebilirsin
+
+Create dosyaları servislerin ihtiyacı olan her şeyi `C:\ProgramData` altına kopyalıyor, servisler oradan çalışıyor. İndirdiğin klasöre artık ihtiyacın yok:
+
+| Klasör | İçinde ne var |
+|---|---|
+| `C:\ProgramData\goodbyedpi-custom` | goodbyedpi-custom'ın dosyaları ve kendi `uninstall.cmd`'si |
+| `C:\ProgramData\goodbyedpi-global` | goodbyedpi-global'in dosyaları, `run-goodbyedpi-global.bat` (global'i başlatır) ve kendi `uninstall.cmd`'si |
+
+İndirdiğin klasörü sadece ileride site listesini ya da ayarı değiştirmek istersen sakla: ikisi de oradaki `service_custom_create.cmd`'yi tekrar çalıştırarak yapılıyor. (Sildiysen zip'i tekrar indirmen yeterli.)
 
 ---
 
@@ -90,7 +99,7 @@ Sonra `service_custom_create.cmd`'yi tekrar çalıştır. Yeni listeyi kopyalar 
 
 ### goodbyedpi-global (tüm PC, istediğinde)
 
-1. `run-goodbyedpi-global.bat` dosyasına çift tıkla. Bu dosya `C:\ProgramData\goodbyedpi-global` içinde de var, indirdiğin klasörü silsen de çalışır.
+1. `C:\ProgramData\goodbyedpi-global` içindeki `run-goodbyedpi-global.bat` dosyasına çift tıkla (indirdiğin klasördeki de aynı işi yapar).
 2. Yönetici (UAC) uyarısında **Evet**'e tıkla.
 3. Bir terminal penceresi açılır ve servisin çalıştığını söyler.
 4. Kullandığın sürece **pencereyi açık tut** (küçültebilirsin).
@@ -116,14 +125,14 @@ Custom ve global farklı araçlardan olabilir (örn. custom zapret, global Goodb
 
 ## Kaldırma
 
-Çift tıkla (yönetici izni ister):
+Kaldırmak istediğinin `uninstall.cmd`'sine çift tıkla (yönetici izni ister):
 
-- `service_custom_remove.cmd` → goodbyedpi-custom'ı kaldırır
-- `service_global_remove.cmd` → goodbyedpi-global'i kaldırır
+- `C:\ProgramData\goodbyedpi-custom\uninstall.cmd` → goodbyedpi-custom'ı kaldırır
+- `C:\ProgramData\goodbyedpi-global\uninstall.cmd` → goodbyedpi-global'i kaldırır
 
-Bunlar `C:\ProgramData` içindeki kopyaları da siler. Turkey ve valdik aynı servis adlarını kullandığı için hangi klasörden çalıştırdığının önemi yok.
+İndirdiğin klasör hâlâ duruyorsa oradaki `service_custom_remove.cmd` ve `service_global_remove.cmd` de aynı işi yapar. Turkey ve valdik aynı servis adlarını kullandığı için hangi klasörden çalıştırdığının önemi yok.
 
-Klasörü zaten sildin mi? Her kurulumun kendi kaldırıcısı da var: `C:\ProgramData\goodbyedpi-custom` veya `C:\ProgramData\goodbyedpi-global` içindeki `uninstall.cmd`'ye çift tıkla.
+Servisi ve `C:\ProgramData` içindeki klasörünü kaldırırlar. WinDivert sürücüsü PC yeniden başlayana kadar yüklü kalabildiği için klasörde `WinDivert64.sys` kalabilir; PC'yi yeniden başlatıp kalanı sil.
 
 ---
 

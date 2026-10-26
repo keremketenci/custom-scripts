@@ -52,8 +52,6 @@ Copy **everything inside** your chosen version's `custom-files` folder into the 
 
 So `service_custom_create.cmd` should sit next to the `x86_64` folder.
 
-> ℹ️ The create scripts copy the needed files to `C:\ProgramData\goodbyedpi-custom` and `C:\ProgramData\goodbyedpi-global`, and the services run from there. You can move the folder after installing, but keep it if you want to edit the site list. To uninstall without it, use `uninstall.cmd` in those folders.
-
 ### 2. Install the services
 
 In the GoodbyeDPI folder, **double-click** these and click **Yes** on the admin (UAC) prompt:
@@ -66,6 +64,17 @@ Both first ask for the **language** (`1) English  2) Turkce`) and then show a **
 When you see `Installed.` / `GoodbyeDPI Global service created.`, press any key to close the window. If something goes wrong, you'll see a message starting with `ERROR:` explaining what to do.
 
 > ℹ️ If the `GoodbyeDPI` or `GoodbyeDPI-discord` services from older scripts are installed, `service_custom_create.cmd` removes them automatically so they don't process the same traffic twice.
+
+### 3. After installing: you can delete the downloaded folder
+
+The create scripts copy everything the services need to `C:\ProgramData`, and the services run from there. You don't need the downloaded folder anymore:
+
+| Folder | What's in it |
+|---|---|
+| `C:\ProgramData\goodbyedpi-custom` | goodbyedpi-custom's files and its `uninstall.cmd` |
+| `C:\ProgramData\goodbyedpi-global` | goodbyedpi-global's files, `run-goodbyedpi-global.bat` (starts global) and its `uninstall.cmd` |
+
+Keep the downloaded folder only if you want to change the site list or the setting later: both are done by running `service_custom_create.cmd` again from it. (Deleted it already? Just download the zip again.)
 
 ---
 
@@ -90,7 +99,7 @@ Then run `service_custom_create.cmd` again. It copies the new list and restarts 
 
 ### goodbyedpi-global (whole PC, on demand)
 
-1. Double-click `run-goodbyedpi-global.bat`. It's also in `C:\ProgramData\goodbyedpi-global`, so it still works after you delete the downloaded folder.
+1. Double-click `run-goodbyedpi-global.bat` in `C:\ProgramData\goodbyedpi-global` (the one in the downloaded folder does the same).
 2. Click **Yes** on the admin (UAC) prompt.
 3. A terminal window opens and says the service is running.
 4. **Keep the window open** while you need it (you can minimize it).
@@ -116,14 +125,14 @@ Custom and global can come from different tools (e.g. zapret custom, GoodbyeDPI 
 
 ## Uninstall
 
-Double-click (it asks for admin permission):
+Double-click the `uninstall.cmd` of what you want to remove (it asks for admin permission):
 
-- `service_custom_remove.cmd` → removes goodbyedpi-custom
-- `service_global_remove.cmd` → removes goodbyedpi-global
+- `C:\ProgramData\goodbyedpi-custom\uninstall.cmd` → removes goodbyedpi-custom
+- `C:\ProgramData\goodbyedpi-global\uninstall.cmd` → removes goodbyedpi-global
 
-These also delete the copies in `C:\ProgramData`. Turkey and valdik use the same service names, so it doesn't matter which folder you run them from.
+Still have the downloaded folder? `service_custom_remove.cmd` and `service_global_remove.cmd` there do the same. Turkey and valdik use the same service names, so it doesn't matter which folder you run them from.
 
-Already deleted the folder? Each install also has its own uninstaller: double-click `uninstall.cmd` in `C:\ProgramData\goodbyedpi-custom` or `C:\ProgramData\goodbyedpi-global`.
+They remove the service and its folder in `C:\ProgramData`. The WinDivert driver may stay loaded until you restart the PC, so its `WinDivert64.sys` may be left in the folder; restart and delete what's left.
 
 ---
 

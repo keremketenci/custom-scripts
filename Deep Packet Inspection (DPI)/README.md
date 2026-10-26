@@ -25,6 +25,7 @@ Both tools come with the same set of scripts:
 - **Settings menu:** blocking differs between internet providers, so the installer offers several bypass methods. If a site doesn't open, run the installer again and pick the next number.
 - **English / Turkish:** the installer asks for the language first (English by default).
 - **One tool at a time:** installing one tool's custom (or global) mode removes the other tool's, so they never process the same traffic twice.
+- **Delete the downloaded folder after installing:** everything is copied to `C:\ProgramData`, including an `uninstall.cmd` for each mode and the launcher that starts global mode.
 - **Works with newer versions:** the scripts check the files and settings of the tool version they find and tell you clearly if something isn't supported.
 
 ## Quick start

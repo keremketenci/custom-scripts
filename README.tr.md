@@ -18,6 +18,8 @@ Hazır script ve kurulumlardan oluşan bir koleksiyon. Her proje kendi klasörü
 2. Çıkarmadan önce zip'e sağ tıkla → **Özellikler** → **Engellemeyi kaldır**'ı işaretle → **Tamam** ([aşağıda](#windows-scriptleri-engellerse) anlatıldı), sonra zip'i çıkar.
 3. Çıkan klasördeki README'yi takip et.
 
+Kurduktan sonra çıkardığın klasörü silebilirsin: her proje ihtiyacı olan dosyaları, kendi kaldırıcısı dahil, bilgisayarındaki bir kurulum klasörüne kopyalar. Nerede olduğu projenin README'sinde yazıyor.
+
 ## Windows scriptleri engellerse
 
 Windows internetten indirilen dosyaları işaretliyor, **Akıllı Uygulama Denetimi** (Smart App Control) ya da SmartScreen de bu yüzden scriptleri çalıştırmayabiliyor (*"Smart App Control blocked a file that may be unsafe"*). Zip'i **çıkarmadan önce** işareti kaldır:

@@ -2,6 +2,8 @@
 #   discord-screenshare-echo-fix-v1.0.0  ->  DiscordScreenShareEchoFix.zip
 #   default-audio-device-guard-v1.0.0    ->  DefaultAudioDeviceGuard.zip
 #   dpi-v1.0.0                           ->  zapret.zip + goodbyedpi.zip
+# To update a release without a new version, move its tag and push it again:
+#   git tag -f dpi-v1.0.0 && git push -f origin dpi-v1.0.0
 # git archive packs the files byte for byte, so the .cmd files keep their CRLF line endings.
 name: Release
 
@@ -67,6 +69,12 @@ jobs:
           EOF
           ls -la dist
         id: build
+
+      # A tag moved to a newer commit and pushed again replaces its release instead of adding to the old one
+      - name: Remove the previous release of this tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release delete "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --yes || true
 
       - uses: softprops/action-gh-release@v2
         with:

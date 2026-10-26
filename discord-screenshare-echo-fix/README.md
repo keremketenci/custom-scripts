@@ -33,7 +33,7 @@ Install
 
     Press R to refresh the list if you started the screen share after opening the setup.
 
-    Confirm. The script copies itself to %LOCALAPPDATA%\DiscordScreenShareEchoFix, creates a scheduled task named DiscordScreenShareEchoFix and starts it. Keep the downloaded folder if you want to change devices later. An Uninstall.cmd is also placed in the install folder.
+    Confirm. The script copies itself to %LOCALAPPDATA%\DiscordScreenShareEchoFix, creates a scheduled task named DiscordScreenShareEchoFix and starts it. That folder has everything it needs, including an Uninstall.cmd, so you can delete the downloaded folder. Keep it only if you want to change devices later.
 
 Done. From now on, every time you share your screen, Discord's session on those devices is muted within a second, including after restarting Discord or rebooting your PC.
 Change devices

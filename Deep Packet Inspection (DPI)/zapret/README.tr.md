@@ -39,8 +39,6 @@ zapret-win-bundle-master\zapret-winws
 
 Windows "dosyaların yerini değiştir" diye sorarsa **Değiştir**'e tıkla.
 
-> ℹ️ Create dosyaları gerekli dosyaları `C:\ProgramData\zapret-custom` ve `C:\ProgramData\zapret-global` klasörlerine kopyalıyor, servisler oradan çalışıyor. Yani kurduktan sonra `zapret-winws` klasörünü taşıyabilir, hatta silebilirsin — ama site listesini düzenlemek için saklaman iyi olur. Onsuz kaldırmak için o klasörlerdeki `uninstall.cmd`'yi kullan.
-
 ### 2. Servisleri kur
 
 `zapret-win-bundle-master\zapret-winws` içinde şu dosyalara **çift tıkla** ve yönetici (UAC) uyarısında **Evet**'e bas:
@@ -53,6 +51,17 @@ Windows "dosyaların yerini değiştir" diye sorarsa **Değiştir**'e tıkla.
 `Kuruldu.` / `Zapret Global servisi olusturuldu.` yazısını görünce (İngilizce seçtiysen `Installed.` / `Zapret Global service created.`) bir tuşa basıp pencereyi kapatabilirsin. Bir şey ters giderse `HATA:` (İngilizce'de `ERROR:`) ile başlayan bir mesaj ve ne yapman gerektiği yazar.
 
 > ℹ️ **GoodbyeDPI ile birlikte:** İkisi aynı anda açık olursa siteler açılmayabilir. Bu yüzden her modda sadece bir araç kurulu olabilir. `service_custom_create.cmd` GoodbyeDPI'ın custom servisini (`goodbyedpi-custom`, eski `GoodbyeDPI` / `GoodbyeDPI-discord` servisleri de dahil) **tamamen kaldırır**. `service_global_create.cmd` de `goodbyedpi-global`'i kaldırır. GoodbyeDPI'ın create dosyaları da zapret'i aynı şekilde kaldırır. Hangisini en son kurduysan o kalır.
+
+### 3. Kurduktan sonra: indirdiğin klasörü silebilirsin
+
+Create dosyaları servislerin ihtiyacı olan her şeyi `C:\ProgramData` altına kopyalıyor, servisler oradan çalışıyor. İndirdiğin klasöre artık ihtiyacın yok:
+
+| Klasör | İçinde ne var |
+|---|---|
+| `C:\ProgramData\zapret-custom` | zapret-custom'ın dosyaları ve kendi `uninstall.cmd`'si |
+| `C:\ProgramData\zapret-global` | zapret-global'in dosyaları, `run-zapret-global.bat` (global'i başlatır) ve kendi `uninstall.cmd`'si |
+
+İndirdiğin klasörü sadece ileride site listesini ya da ayarı değiştirmek istersen sakla: ikisi de oradaki `service_custom_create.cmd`'yi tekrar çalıştırarak yapılıyor. (Sildiysen zip'i tekrar indirmen yeterli.)
 
 ---
 
@@ -78,7 +87,7 @@ Sonra `service_custom_create.cmd`'yi tekrar çalıştır — yeni listeyi kopyal
 
 ### zapret-global (tüm PC, istediğinde)
 
-1. `run-zapret-global.bat` dosyasına çift tıkla. Bu dosya `C:\ProgramData\zapret-global` içinde de var, indirdiğin klasörü silsen de çalışır.
+1. `C:\ProgramData\zapret-global` içindeki `run-zapret-global.bat` dosyasına çift tıkla (indirdiğin klasördeki de aynı işi yapar).
 2. Yönetici (UAC) uyarısında **Evet**'e tıkla.
 3. Bir terminal penceresi açılır ve servisin çalıştığını söyler.
 4. Kullandığın sürece **pencereyi açık tut** (küçültebilirsin).
@@ -90,14 +99,14 @@ Global açıkken zapret-custom (ve kuruluysa goodbyedpi-custom) geçici olarak d
 
 ## Kaldırma
 
-Çift tıkla (yönetici izni ister):
+Kaldırmak istediğinin `uninstall.cmd`'sine çift tıkla (yönetici izni ister):
 
-- `service_custom_remove.cmd` → zapret-custom'ı kaldırır
-- `service_global_remove.cmd` → zapret-global'i kaldırır
+- `C:\ProgramData\zapret-custom\uninstall.cmd` → zapret-custom'ı kaldırır
+- `C:\ProgramData\zapret-global\uninstall.cmd` → zapret-global'i kaldırır
 
-Bunlar `C:\ProgramData` içindeki kopyaları da siler. Sonra klasörü silebilirsin.
+İndirdiğin klasör hâlâ duruyorsa oradaki `service_custom_remove.cmd` ve `service_global_remove.cmd` de aynı işi yapar.
 
-Klasörü zaten sildin mi? Her kurulumun kendi kaldırıcısı da var: `C:\ProgramData\zapret-custom` veya `C:\ProgramData\zapret-global` içindeki `uninstall.cmd`'ye çift tıkla.
+Servisi ve `C:\ProgramData` içindeki klasörünü kaldırırlar. WinDivert sürücüsü PC yeniden başlayana kadar yüklü kaldığı için klasörde `WinDivert64.sys` kalabilir; PC'yi yeniden başlatıp kalanı sil.
 
 ---
 

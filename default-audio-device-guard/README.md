@@ -49,7 +49,7 @@ It can guard each of these four separately (the same ones you see in the Sound c
    - `0` = don't guard this one (Windows decides, as usual)
    - `Enter` = keep the current choice
    - `R` = refresh the list (e.g. after plugging in a device), `Q` = quit
-6. Confirm. The script copies itself to `%LOCALAPPDATA%\DefaultAudioDeviceGuard`, creates a scheduled task named `DefaultAudioDeviceGuard` and starts it. Keep the downloaded folder if you want to run the setup again later. An `Uninstall.cmd` is also placed in the install folder.
+6. Confirm. The script copies itself to `%LOCALAPPDATA%\DefaultAudioDeviceGuard`, creates a scheduled task named `DefaultAudioDeviceGuard` and starts it. That folder has everything it needs, including an `Uninstall.cmd`, so you can delete the downloaded folder. Keep it only if you want to run the setup again later.
 
 Done. From now on the guarded devices are set back as the defaults whenever Windows switches them, including after rebooting your PC.
 

@@ -39,8 +39,6 @@ zapret-win-bundle-master\zapret-winws
 
 If Windows asks to replace any files, click **Replace**.
 
-> ℹ️ The create scripts copy the needed files to `C:\ProgramData\zapret-custom` and `C:\ProgramData\zapret-global`, and the services run from there. So you can move or even delete the `zapret-winws` folder after installing — but keep it if you want to edit the site list. To uninstall without it, use `uninstall.cmd` in those folders.
-
 ### 2. Install the services
 
 Inside `zapret-win-bundle-master\zapret-winws`, **double-click** these and click **Yes** on the admin (UAC) prompt:
@@ -53,6 +51,17 @@ Both first ask for the **language** (`1) English  2) Turkce`) and then show a **
 When you see `Installed.` / `Zapret Global service created.`, press any key to close the window. If something goes wrong, you'll see a message starting with `ERROR:` explaining what to do.
 
 > ℹ️ **Together with GoodbyeDPI:** if both run at once, sites may stop opening, so only one tool can be installed per mode. `service_custom_create.cmd` **completely removes** GoodbyeDPI's custom service (`goodbyedpi-custom`, plus the old `GoodbyeDPI` / `GoodbyeDPI-discord` services), and `service_global_create.cmd` removes `goodbyedpi-global`. GoodbyeDPI's create scripts remove zapret the same way. Whichever you installed last is the one that stays.
+
+### 3. After installing: you can delete the downloaded folder
+
+The create scripts copy everything the services need to `C:\ProgramData`, and the services run from there. You don't need the downloaded folder anymore:
+
+| Folder | What's in it |
+|---|---|
+| `C:\ProgramData\zapret-custom` | zapret-custom's files and its `uninstall.cmd` |
+| `C:\ProgramData\zapret-global` | zapret-global's files, `run-zapret-global.bat` (starts global) and its `uninstall.cmd` |
+
+Keep the downloaded folder only if you want to change the site list or the setting later: both are done by running `service_custom_create.cmd` again from it. (Deleted it already? Just download the zip again.)
 
 ---
 
@@ -78,7 +87,7 @@ Then run `service_custom_create.cmd` again — it copies the new list and restar
 
 ### zapret-global (whole PC, on demand)
 
-1. Double-click `run-zapret-global.bat`. It's also in `C:\ProgramData\zapret-global`, so it still works after you delete the downloaded folder.
+1. Double-click `run-zapret-global.bat` in `C:\ProgramData\zapret-global` (the one in the downloaded folder does the same).
 2. Click **Yes** on the admin (UAC) prompt.
 3. A terminal window opens and says the service is running.
 4. **Keep the window open** while you need it (you can minimize it).
@@ -90,14 +99,14 @@ While global is on, zapret-custom (and goodbyedpi-custom, if installed) is pause
 
 ## Uninstall
 
-Double-click (it asks for admin permission):
+Double-click the `uninstall.cmd` of what you want to remove (it asks for admin permission):
 
-- `service_custom_remove.cmd` → removes zapret-custom
-- `service_global_remove.cmd` → removes zapret-global
+- `C:\ProgramData\zapret-custom\uninstall.cmd` → removes zapret-custom
+- `C:\ProgramData\zapret-global\uninstall.cmd` → removes zapret-global
 
-These also delete the copies in `C:\ProgramData`. After that you can delete the folder.
+Still have the downloaded folder? `service_custom_remove.cmd` and `service_global_remove.cmd` there do the same.
 
-Already deleted the folder? Each install also has its own uninstaller: double-click `uninstall.cmd` in `C:\ProgramData\zapret-custom` or `C:\ProgramData\zapret-global`.
+They remove the service and its folder in `C:\ProgramData`. The WinDivert driver stays loaded until you restart the PC, so its `WinDivert64.sys` may be left in the folder; restart and delete what's left.
 
 ---
 

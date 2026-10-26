@@ -25,6 +25,7 @@ Windows 11'de DPI engellerini (örneğin Türkiye'deki Discord engelini) aşmak 
 - **Ayar menüsü:** Engelleme internet sağlayıcısına göre değişiyor, bu yüzden kurulumda birkaç yöntem sunuluyor. Site açılmazsa kurulumu tekrar çalıştırıp sıradaki numarayı seçersin.
 - **İngilizce / Türkçe:** Kurulum önce dili sorar (varsayılan İngilizce, Türkçe için `2`).
 - **Aynı anda tek araç:** Bir aracın custom (ya da global) modunu kurmak diğer aracınkini kaldırır, böylece ikisi aynı trafiği iki kez işlemez.
+- **Kurduktan sonra indirdiğin klasörü silebilirsin:** Her şey `C:\ProgramData` altına kopyalanır; her modun kendi `uninstall.cmd`'si ve global modu başlatan dosya da dahil.
 - **Yeni sürümlerle çalışır:** Scriptler buldukları sürümün dosyalarını ve ayarlarını kontrol eder, desteklenmeyen bir şey varsa açıkça söyler.
 
 ## Hızlı başlangıç
