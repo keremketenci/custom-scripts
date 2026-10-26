@@ -39,7 +39,7 @@ zapret-win-bundle-master\zapret-winws
 
 Windows "dosyaların yerini değiştir" diye sorarsa **Değiştir**'e tıkla.
 
-> ℹ️ Create dosyaları gerekli dosyaları `C:\ProgramData\zapret-custom` ve `C:\ProgramData\zapret-global` klasörlerine kopyalıyor, servisler oradan çalışıyor. Yani kurduktan sonra `zapret-winws` klasörünü taşıyabilir, hatta silebilirsin — ama site listesini düzenlemek veya kaldırmak için saklaman iyi olur.
+> ℹ️ Create dosyaları gerekli dosyaları `C:\ProgramData\zapret-custom` ve `C:\ProgramData\zapret-global` klasörlerine kopyalıyor, servisler oradan çalışıyor. Yani kurduktan sonra `zapret-winws` klasörünü taşıyabilir, hatta silebilirsin — ama site listesini düzenlemek için saklaman iyi olur. Onsuz kaldırmak için o klasörlerdeki `uninstall.cmd`'yi kullan.
 
 ### 2. Servisleri kur
 
@@ -97,12 +97,15 @@ Global açıkken zapret-custom (ve kuruluysa goodbyedpi-custom) geçici olarak d
 
 Bunlar `C:\ProgramData` içindeki kopyaları da siler. Sonra klasörü silebilirsin.
 
+Klasörü zaten sildin mi? Her kurulumun kendi kaldırıcısı da var: `C:\ProgramData\zapret-custom` veya `C:\ProgramData\zapret-global` içindeki `uninstall.cmd`'ye çift tıkla.
+
 ---
 
 ## Sorun Giderme
 
 - **"Smart App Control blocked a file that may be unsafe" diyor / scriptler açılmıyor** → Windows internetten indirilen dosyaları engelliyor. Ana README'deki [Windows scriptleri engellerse](../../README.tr.md#windows-scriptleri-engellerse) bölümüne bak.
 - **Antivirüs `winws.exe` veya `WinDivert`'i siliyor / engelliyor** → `zapret-win-bundle-master`, `C:\ProgramData\zapret-custom` ve `C:\ProgramData\zapret-global` klasörlerini antivirüs istisnalarına ekle. Yanlış alarm (ağ paketlerine müdahale ettiği için antivirüsler sevmiyor).
+- **"WinDivert surucusu yuklenemedi" diyor (hata 1058)** → antivirüs sorunu değil, istisna eklemek işe yaramaz. PC'yi yeniden başlatıp create dosyasını tekrar çalıştır. Devam ederse başka bir DPI aracını (başka zapret paketleri, GoodbyeDPI) kaldır ya da anti-cheat'i (Vanguard, FACEIT) kontrol et.
 - **Global penceresi "servisi bulunamadi" diyor** → önce `service_global_create.cmd`'yi çalıştır.
 - **"Bu zapret surumu secilen ayari kabul etmiyor" diyor** → başka bir numara seç. Hiçbirini kabul etmiyorsa hazır gelen `zapret-win-bundle-master`'ı kullan.
 - **"UYARI: ... Discord sesli sohbet calismayabilir" diyor** → kullandığın zapret sürümünde Discord ses filtresi yok. Web siteleri yine çalışır, ses için hazır gelen `zapret-win-bundle-master`'ı kullan.

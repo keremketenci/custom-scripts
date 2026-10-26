@@ -64,6 +64,9 @@ set "M_COPYFAIL2=Close any open zapret windows and try again."
 set "M_CREATEFAIL=ERROR: Couldn't create the service. If services.msc is open, close it and try again."
 set "M_STARTFAIL1=ERROR: The service was created but isn't running."
 set "M_STARTFAIL2= - Your antivirus may have blocked winws.exe or WinDivert. Add %DEST% to its exclusions."
+set "M_ERRCODE=error"
+set "M_DRIVERFAIL1= - The WinDivert driver couldn't be loaded, this isn't an antivirus problem."
+set "M_DRIVERFAIL2= - Restart the PC and run this again. If it keeps happening, another DPI tool or an anti-cheat may be blocking WinDivert."
 set "M_PRESSKEY=Press any key to close this window."
 exit /b
 
@@ -90,5 +93,8 @@ set "M_COPYFAIL2=Acik zapret pencerelerini kapatip tekrar dene."
 set "M_CREATEFAIL=HATA: Servis olusturulamadi. services.msc aciksa kapatip tekrar dene."
 set "M_STARTFAIL1=HATA: Servis olusturuldu ama calismiyor."
 set "M_STARTFAIL2= - Antivirus winws.exe veya WinDivert'i engellemis olabilir. %DEST% klasorunu istisnalara ekle."
+set "M_ERRCODE=hata"
+set "M_DRIVERFAIL1= - WinDivert surucusu yuklenemedi, bu bir antivirus sorunu degil."
+set "M_DRIVERFAIL2= - PC'yi yeniden baslatip bunu tekrar calistir. Devam ederse baska bir DPI araci veya anti-cheat WinDivert'i engelliyor olabilir."
 set "M_PRESSKEY=Pencereyi kapatmak icin bir tusa bas."
 exit /b

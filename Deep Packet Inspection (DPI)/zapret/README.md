@@ -39,7 +39,7 @@ zapret-win-bundle-master\zapret-winws
 
 If Windows asks to replace any files, click **Replace**.
 
-> ℹ️ The create scripts copy the needed files to `C:\ProgramData\zapret-custom` and `C:\ProgramData\zapret-global`, and the services run from there. So you can move or even delete the `zapret-winws` folder after installing — but keep it if you want to edit the site list or uninstall later.
+> ℹ️ The create scripts copy the needed files to `C:\ProgramData\zapret-custom` and `C:\ProgramData\zapret-global`, and the services run from there. So you can move or even delete the `zapret-winws` folder after installing — but keep it if you want to edit the site list. To uninstall without it, use `uninstall.cmd` in those folders.
 
 ### 2. Install the services
 
@@ -97,12 +97,15 @@ Double-click (it asks for admin permission):
 
 These also delete the copies in `C:\ProgramData`. After that you can delete the folder.
 
+Already deleted the folder? Each install also has its own uninstaller: double-click `uninstall.cmd` in `C:\ProgramData\zapret-custom` or `C:\ProgramData\zapret-global`.
+
 ---
 
 ## Troubleshooting
 
 - **"Smart App Control blocked a file that may be unsafe" / the scripts won't open** → Windows blocks files downloaded from the internet. See [If Windows blocks the scripts](../../README.md#if-windows-blocks-the-scripts) in the main README.
 - **Antivirus deletes / blocks `winws.exe` or `WinDivert`** → add the `zapret-win-bundle-master`, `C:\ProgramData\zapret-custom` and `C:\ProgramData\zapret-global` folders to your antivirus exclusions. It's a false positive (it intercepts network packets, which antiviruses don't like).
+- **Says "The WinDivert driver couldn't be loaded" (error 1058)** → it's not an antivirus problem, adding exclusions won't help. Restart the PC and run the create script again. If it keeps happening, remove other DPI tools (other zapret packages, GoodbyeDPI) or check your anti-cheat (Vanguard, FACEIT).
 - **Global window says "service not found"** → run `service_global_create.cmd` first.
 - **"This zapret version doesn't accept the chosen setting"** → pick another number. If it accepts none of them, use the included `zapret-win-bundle-master`.
 - **"WARNING: ... Discord voice may not work"** → your zapret version has no Discord voice filter. Web still works; for voice, use the included `zapret-win-bundle-master`.

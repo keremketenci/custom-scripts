@@ -24,6 +24,8 @@ set "MISSING=files\list-custom.txt"
 if not exist "%~dp0files\list-custom.txt" goto nofile
 set "MISSING=select-profile.cmd"
 if not exist "%~dp0select-profile.cmd" goto nofile
+set "MISSING=service_custom_remove.cmd"
+if not exist "%~dp0service_custom_remove.cmd" goto nofile
 
 :pick
 rem Settings menu: the chosen setting goes into PROFILE_ARGS
@@ -57,6 +59,7 @@ if %N% geq 10 goto deleted
 timeout /t 1 /nobreak >nul
 goto waitdel
 :deleted
+call :cleardriver
 
 rem Copy the files to a fixed place so the service keeps working even if this folder is moved or deleted.
 rem Wildcards instead of exact names, so versions that ship different DLLs or drivers still work.
@@ -69,6 +72,10 @@ robocopy "%~dp0windivert.filter" "%DEST%\windivert.filter" /E /R:1 /W:1 >nul
 if errorlevel 8 goto copyfail
 :copied
 if not exist "%DEST%\winws.exe" goto copyfail
+rem An uninstaller next to the service, so it can be removed even if this folder is deleted
+copy /y "%~dp0service_custom_remove.cmd" "%DEST%\uninstall.cmd" >nul
+copy /y "%~dp0select-language.cmd" "%DEST%\" >nul
+if exist "%~dp0language.txt" copy /y "%~dp0language.txt" "%DEST%\" >nul
 
 set "BASE=%DEST%"
 set Q=\"
@@ -78,7 +85,8 @@ sc create %SVC% binPath= "\"%DEST%\winws.exe\" %ARGS%" start= auto DisplayName= 
 if errorlevel 1 goto createfail
 sc description %SVC% "zapret - only the sites in list-custom.txt + Discord voice" >nul
 sc start %SVC% >nul
-if errorlevel 1 goto startfail
+set "ERR=%errorlevel%"
+if not "%ERR%"=="0" goto startfail
 rem Make sure it's still running a few seconds later (an antivirus may kill it)
 timeout /t 3 /nobreak >nul
 sc query %SVC% | find "RUNNING" >nul
@@ -114,8 +122,17 @@ echo %M_CREATEFAIL%
 goto fail
 
 :startfail
-echo %M_STARTFAIL1%
+rem Show the error the service stopped with, it tells an antivirus block apart from a driver that won't load
+for /f "tokens=3" %%a in ('sc query %SVC% ^| find "WIN32_EXIT_CODE"') do if not "%%a"=="0" set "ERR=%%a"
+echo %M_STARTFAIL1% (%M_ERRCODE% %ERR%)
+if "%ERR%"=="1058" goto driverfail
+if "%ERR%"=="1072" goto driverfail
 echo %M_STARTFAIL2%
+goto fail
+
+:driverfail
+echo %M_DRIVERFAIL1%
+echo %M_DRIVERFAIL2%
 goto fail
 
 :fail
@@ -140,6 +157,16 @@ if exist "%BASE%\windivert.filter\windivert_part.discord_media.txt" set "HASVOIC
 if exist "%BASE%\windivert.filter\windivert_part.discord_media.txt" set ARGS=%ARGS% --wf-raw-part=@%Q%%BASE%\windivert.filter\windivert_part.discord_media.txt%Q%
 if exist "%BASE%\windivert.filter\windivert_part.stun.txt" set ARGS=%ARGS% --wf-raw-part=@%Q%%BASE%\windivert.filter\windivert_part.stun.txt%Q%
 set ARGS=%ARGS% --filter-tcp=80,443 --hostlist=%Q%%BASE%\files\list-custom.txt%Q% %PROFILE_ARGS% --new --filter-l7=discord,stun --dpi-desync=fake --dpi-desync-repeats=2
+exit /b
+
+rem A leftover WinDivert driver service that isn't running (from another DPI tool or a failed start) can keep
+rem the driver from loading (error 1058). winws creates it again when it starts, so it's safe to remove.
+:cleardriver
+sc query WinDivert >nul 2>&1
+if errorlevel 1 exit /b
+sc query WinDivert | find "RUNNING" >nul
+if not errorlevel 1 exit /b
+sc delete WinDivert >nul 2>&1
 exit /b
 
 rem Usage: call :removesvc <service> [folder]

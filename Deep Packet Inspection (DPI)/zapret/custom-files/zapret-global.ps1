@@ -27,6 +27,7 @@ $messages = @{
         WillRestart   = "will start again when this window closes."
         HowToStop     = "Press Ctrl+C or close this window to stop."
         Died          = "$serviceName stopped unexpectedly. Your antivirus may have blocked it."
+        DriverFail    = "The WinDivert driver couldn't be loaded, this isn't an antivirus problem.`nRestart the PC and try again. If it keeps happening, another DPI tool or an anti-cheat may be blocking WinDivert."
     }
     tr = @{
         PressEnter    = "Kapatmak icin Enter'a bas"
@@ -41,6 +42,7 @@ $messages = @{
         WillRestart   = "pencere kapaninca tekrar baslatilacak."
         HowToStop     = "Cikmak icin Ctrl+C'ye bas ya da pencereyi kapat."
         Died          = "$serviceName beklenmedik sekilde durdu. Antivirus engellemis olabilir."
+        DriverFail    = "WinDivert surucusu yuklenemedi, bu bir antivirus sorunu degil.`nPC'yi yeniden baslatip tekrar dene. Devam ederse baska bir DPI araci veya anti-cheat WinDivert'i engelliyor olabilir."
     }
 }
 $M = $messages[$lang]
@@ -49,6 +51,13 @@ function Exit-WithMessage($message) {
     Write-Host $message -ForegroundColor Red
     Read-Host $M.PressEnter
     exit 1
+}
+
+# The error the service stopped with: 1058/1072 means the WinDivert driver didn't load, not an antivirus block
+function Exit-StartFailed($message) {
+    $code = (Get-CimInstance Win32_Service -Filter "Name='$serviceName'").ExitCode
+    if ($code -eq 1058 -or $code -eq 1072) { $message = $M.DriverFail }
+    Exit-WithMessage "$message ($code)"
 }
 
 $service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
@@ -85,13 +94,13 @@ Write-Host $M.Starting
 try {
     Start-Service -Name $serviceName -ErrorAction Stop
 } catch {
-    Exit-WithMessage "$($M.StartFail)`n$($_.Exception.Message)"
+    Exit-StartFailed "$($M.StartFail)`n$($_.Exception.Message)"
 }
 
 # Make sure it's still running a few seconds later (an antivirus may kill it)
 Start-Sleep -Seconds 3
 if ((Get-Service -Name $serviceName).Status -ne 'Running') {
-    Exit-WithMessage $M.StoppedAtOnce
+    Exit-StartFailed $M.StoppedAtOnce
 }
 
 Write-Host $M.Running -ForegroundColor Green

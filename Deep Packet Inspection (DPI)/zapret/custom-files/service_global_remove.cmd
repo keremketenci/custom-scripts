@@ -9,6 +9,20 @@ exit /b
 
 set "SVC=zapret-global"
 set "DEST=%ProgramData%\zapret-global"
+set "TMPDIR=%TEMP%\zapret-global-uninstall"
+
+rem The create script copies this file to %DEST% as uninstall.cmd. Opened from there, run a temp copy instead,
+rem a batch file can't delete the folder it runs from.
+if /i not "%~dp0"=="%DEST%\" goto start
+rd /s /q "%TMPDIR%" >nul 2>&1
+md "%TMPDIR%"
+copy /y "%~f0" "%TMPDIR%\" >nul
+copy /y "%~dp0select-language.cmd" "%TMPDIR%\" >nul
+if exist "%~dp0language.txt" copy /y "%~dp0language.txt" "%TMPDIR%\" >nul
+cd /d "%TEMP%"
+start "" cmd /c ""%TMPDIR%\%~nx0""
+exit /b
+:start
 
 rem Messages in the saved language (chosen when the service was installed)
 set "DPI_CALLER=1"
@@ -37,3 +51,6 @@ exit /b 1
 :end
 echo %M_PRESSKEY%
 pause >nul
+rem Running from the temp copy: delete it too once this script has ended
+if /i not "%~dp0"=="%TMPDIR%\" exit /b
+(goto) 2>nul & rd /s /q "%TMPDIR%"
