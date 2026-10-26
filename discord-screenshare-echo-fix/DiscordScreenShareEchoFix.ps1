@@ -693,4 +693,4 @@ Install-Watcher $selected
 
 Write-Host ''
 Write-Host 'Done. DiscordScreenShareEchoFix is running in the background and starts automatically at logon.' -ForegroundColor Green
-Write-Host 'Run this script again any time to change the devices, or with -Uninstall to remove it.'
+Write-Host 'Run the setup again any time to change the devices, or Uninstall.cmd to remove it.'

@@ -53,9 +53,10 @@ function Exit-WithMessage($message) {
     exit 1
 }
 
-# The error the service stopped with: 1058/1072 means the WinDivert driver didn't load, not an antivirus block
-function Exit-StartFailed($message) {
-    $code = (Get-CimInstance Win32_Service -Filter "Name='$serviceName'").ExitCode
+# 1058/1072 means the WinDivert driver didn't load, not an antivirus block.
+# $code is Start-Service's own error if it failed, otherwise the one the service stopped with.
+function Exit-StartFailed($message, $code) {
+    if (-not $code) { $code = (Get-CimInstance Win32_Service -Filter "Name='$serviceName'").ExitCode }
     if ($code -eq 1058 -or $code -eq 1072) { $message = $M.DriverFail }
     Exit-WithMessage "$message ($code)"
 }
@@ -94,7 +95,9 @@ Write-Host $M.Starting
 try {
     Start-Service -Name $serviceName -ErrorAction Stop
 } catch {
-    Exit-StartFailed "$($M.StartFail)`n$($_.Exception.Message)"
+    $err = $_.Exception
+    while ($err -and $err -isnot [ComponentModel.Win32Exception]) { $err = $err.InnerException }
+    Exit-StartFailed "$($M.StartFail)`n$($_.Exception.Message)" $err.NativeErrorCode
 }
 
 # Make sure it's still running a few seconds later (an antivirus may kill it)

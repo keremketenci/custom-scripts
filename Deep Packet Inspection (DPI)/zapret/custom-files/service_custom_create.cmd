@@ -122,8 +122,9 @@ echo %M_CREATEFAIL%
 goto fail
 
 :startfail
-rem Show the error the service stopped with, it tells an antivirus block apart from a driver that won't load
-for /f "tokens=3" %%a in ('sc query %SVC% ^| find "WIN32_EXIT_CODE"') do if not "%%a"=="0" set "ERR=%%a"
+rem Show the error, it tells an antivirus block apart from a driver that won't load.
+rem sc start's own error if it failed, otherwise the one the service stopped with.
+if "%ERR%"=="0" for /f "tokens=3" %%a in ('sc query %SVC% ^| find "WIN32_EXIT_CODE"') do set "ERR=%%a"
 echo %M_STARTFAIL1% (%M_ERRCODE% %ERR%)
 if "%ERR%"=="1058" goto driverfail
 if "%ERR%"=="1072" goto driverfail
