@@ -29,6 +29,8 @@ set "MISSING=list-custom.txt"
 if not exist "%~dp0list-custom.txt" goto nofile
 set "MISSING=select-profile.cmd"
 if not exist "%~dp0select-profile.cmd" goto nofile
+set "MISSING=service_custom_remove.cmd"
+if not exist "%~dp0service_custom_remove.cmd" goto nofile
 
 rem Settings menu: the chosen setting goes into PROFILE_ARGS
 call "%~dp0select-profile.cmd"
@@ -60,6 +62,10 @@ if errorlevel 8 goto copyfail
 robocopy "%~dp0." "%DEST%" list-custom.txt /R:1 /W:1 >nul
 if errorlevel 8 goto copyfail
 if not exist "%DEST%\goodbyedpi.exe" goto copyfail
+rem An uninstaller next to the service, so it can be removed even if this folder is deleted
+copy /y "%~dp0service_custom_remove.cmd" "%DEST%\uninstall.cmd" >nul
+copy /y "%~dp0select-language.cmd" "%DEST%\" >nul
+if exist "%~dp0language.txt" copy /y "%~dp0language.txt" "%DEST%\" >nul
 
 rem Chosen setting, only for the sites in the list
 set ARGS=%PROFILE_ARGS% --blacklist \"%DEST%\list-custom.txt\"

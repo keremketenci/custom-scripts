@@ -33,7 +33,7 @@ Install
 
     Press R to refresh the list if you started the screen share after opening the setup.
 
-    Confirm. The script copies itself to %LOCALAPPDATA%\DiscordScreenShareEchoFix, creates a scheduled task named DiscordScreenShareEchoFix and starts it. Keep the downloaded folder if you want to change devices or uninstall with a double-click later.
+    Confirm. The script copies itself to %LOCALAPPDATA%\DiscordScreenShareEchoFix, creates a scheduled task named DiscordScreenShareEchoFix and starts it. Keep the downloaded folder if you want to change devices later. An Uninstall.cmd is also placed in the install folder.
 
 Done. From now on, every time you share your screen, Discord's session on those devices is muted within a second, including after restarting Discord or rebooting your PC.
 Change devices
@@ -41,9 +41,7 @@ Change devices
 Double-click Setup.cmd again. It shows your current selection. Pick new devices, or press Enter to keep the current ones. The scheduled task is deleted and created again each time.
 Uninstall
 
-Double-click Uninstall.cmd. If you no longer have the downloaded folder, run this in PowerShell instead:
-
-powershell -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\DiscordScreenShareEchoFix\DiscordScreenShareEchoFix.ps1" -Uninstall
+Double-click Uninstall.cmd. If you no longer have the downloaded folder, use the one in the install folder: press Win + R, paste %LOCALAPPDATA%\DiscordScreenShareEchoFix and double-click Uninstall.cmd there.
 
 This removes the scheduled task and the installed files, and unmutes Discord on the selected devices again (Windows remembers the mute per app, so it would stay otherwise). Discord has to be running and in a voice call for that, because Windows only shows its audio sessions while it uses the devices; if it isn't, the uninstall warns you first.
 Other options

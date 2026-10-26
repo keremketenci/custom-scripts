@@ -52,7 +52,7 @@ Seçtiğin sürümün `custom-files` klasörünün **içindeki her şeyi** aynı
 
 Yani `service_custom_create.cmd` ile `x86_64` klasörü yan yana durmalı.
 
-> ℹ️ Create dosyaları gerekli dosyaları `C:\ProgramData\goodbyedpi-custom` ve `C:\ProgramData\goodbyedpi-global` klasörlerine kopyalıyor, servisler oradan çalışıyor. Kurduktan sonra klasörü taşıyabilirsin. Ama site listesini düzenlemek veya kaldırmak için saklaman iyi olur.
+> ℹ️ Create dosyaları gerekli dosyaları `C:\ProgramData\goodbyedpi-custom` ve `C:\ProgramData\goodbyedpi-global` klasörlerine kopyalıyor, servisler oradan çalışıyor. Kurduktan sonra klasörü taşıyabilirsin. Ama site listesini düzenlemek için saklaman iyi olur. Onsuz kaldırmak için o klasörlerdeki `uninstall.cmd`'yi kullan.
 
 ### 2. Servisleri kur
 
@@ -122,6 +122,8 @@ Custom ve global farklı araçlardan olabilir (örn. custom zapret, global Goodb
 - `service_global_remove.cmd` → goodbyedpi-global'i kaldırır
 
 Bunlar `C:\ProgramData` içindeki kopyaları da siler. Turkey ve valdik aynı servis adlarını kullandığı için hangi klasörden çalıştırdığının önemi yok.
+
+Klasörü zaten sildin mi? Her kurulumun kendi kaldırıcısı da var: `C:\ProgramData\goodbyedpi-custom` veya `C:\ProgramData\goodbyedpi-global` içindeki `uninstall.cmd`'ye çift tıkla.
 
 ---
 

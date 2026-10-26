@@ -52,7 +52,7 @@ Copy **everything inside** your chosen version's `custom-files` folder into the 
 
 So `service_custom_create.cmd` should sit next to the `x86_64` folder.
 
-> ℹ️ The create scripts copy the needed files to `C:\ProgramData\goodbyedpi-custom` and `C:\ProgramData\goodbyedpi-global`, and the services run from there. You can move the folder after installing, but keep it if you want to edit the site list or uninstall later.
+> ℹ️ The create scripts copy the needed files to `C:\ProgramData\goodbyedpi-custom` and `C:\ProgramData\goodbyedpi-global`, and the services run from there. You can move the folder after installing, but keep it if you want to edit the site list. To uninstall without it, use `uninstall.cmd` in those folders.
 
 ### 2. Install the services
 
@@ -122,6 +122,8 @@ Double-click (it asks for admin permission):
 - `service_global_remove.cmd` → removes goodbyedpi-global
 
 These also delete the copies in `C:\ProgramData`. Turkey and valdik use the same service names, so it doesn't matter which folder you run them from.
+
+Already deleted the folder? Each install also has its own uninstaller: double-click `uninstall.cmd` in `C:\ProgramData\goodbyedpi-custom` or `C:\ProgramData\goodbyedpi-global`.
 
 ---
 

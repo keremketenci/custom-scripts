@@ -533,6 +533,29 @@ function Show-Devices([string[]]$saved) {
     return $deviceList
 }
 
+# An Uninstall.cmd in the install folder, so it can be removed after the downloaded folder is deleted.
+# It runs from a temp copy, because uninstalling deletes the folder it is in.
+function Write-Uninstaller {
+    $lines = @(
+        '@echo off'
+        'set "T=%TEMP%\DiscordScreenShareEchoFix-uninstall"'
+        'if /i "%~dp0"=="%T%\" goto run'
+        'rd /s /q "%T%" >nul 2>&1'
+        'md "%T%"'
+        'copy /y "%~f0" "%T%\" >nul'
+        'copy /y "%~dp0DiscordScreenShareEchoFix.ps1" "%T%\" >nul'
+        'cd /d "%TEMP%"'
+        'start "" cmd /c ""%T%\%~nx0""'
+        'exit /b'
+        ':run'
+        'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0DiscordScreenShareEchoFix.ps1" -Uninstall'
+        'pause'
+        '(goto) 2>nul & rd /s /q "%T%"'
+    )
+    # Batch files need CRLF line endings
+    [IO.File]::WriteAllText((Join-Path $InstallDir 'Uninstall.cmd'), (($lines -join "`r`n") + "`r`n"))
+}
+
 function Install-Watcher([string[]]$selected) {
     Remove-Task
 
@@ -540,6 +563,7 @@ function Install-Watcher([string[]]$selected) {
     if ($PSCommandPath -ne $Installed) { Copy-Item $PSCommandPath $Installed -Force }
     Unblock-File $Installed -ErrorAction SilentlyContinue
     ConvertTo-Json @{ Devices = @($selected) } | Set-Content $ConfigPath -Encoding UTF8
+    Write-Uninstaller
 
     # The full COMPUTER\user name: a bare $env:USERNAME is rejected when it is the same as the
     # computer name, or after the account was renamed.
