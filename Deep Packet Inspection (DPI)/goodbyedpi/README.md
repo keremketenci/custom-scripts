@@ -90,7 +90,7 @@ Then run `service_custom_create.cmd` again. It copies the new list and restarts 
 
 ### goodbyedpi-global (whole PC, on demand)
 
-1. Double-click `run-goodbyedpi-global.bat`.
+1. Double-click `run-goodbyedpi-global.bat`. It's also in `C:\ProgramData\goodbyedpi-global`, so it still works after you delete the downloaded folder.
 2. Click **Yes** on the admin (UAC) prompt.
 3. A terminal window opens and says the service is running.
 4. **Keep the window open** while you need it (you can minimize it).

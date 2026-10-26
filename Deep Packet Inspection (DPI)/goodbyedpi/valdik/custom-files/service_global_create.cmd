@@ -29,6 +29,10 @@ set "MISSING=select-profile.cmd"
 if not exist "%~dp0select-profile.cmd" goto nofile
 set "MISSING=service_global_remove.cmd"
 if not exist "%~dp0service_global_remove.cmd" goto nofile
+set "MISSING=run-goodbyedpi-global.bat"
+if not exist "%~dp0run-goodbyedpi-global.bat" goto nofile
+set "MISSING=goodbyedpi-global.ps1"
+if not exist "%~dp0goodbyedpi-global.ps1" goto nofile
 
 rem Settings menu: the chosen setting goes into PROFILE_ARGS
 call "%~dp0select-profile.cmd"
@@ -53,13 +57,20 @@ goto waitdel
 
 rem Copy the files to a fixed place so the service keeps working even if this folder is moved or deleted.
 rem Wildcards instead of exact names, so versions that ship different WinDivert files still work.
-robocopy "%SRC%" "%DEST%" goodbyedpi.exe *.dll *.sys /R:1 /W:1 >nul
+robocopy "%SRC%" "%DEST%" goodbyedpi.exe *.dll /R:1 /W:1 >nul
 if errorlevel 8 goto copyfail
+rem The WinDivert driver stays loaded until restart and locks its .sys file in %DEST%, so copy a .sys only if it differs.
+for %%F in ("%SRC%\*.sys") do (
+  fc /b "%%~fF" "%DEST%\%%~nxF" >nul 2>&1 || copy /y "%%~fF" "%DEST%\" >nul 2>&1 || goto driverlocked
+)
 if not exist "%DEST%\goodbyedpi.exe" goto copyfail
 rem An uninstaller next to the service, so it can be removed even if this folder is deleted
 copy /y "%~dp0service_global_remove.cmd" "%DEST%\uninstall.cmd" >nul
 copy /y "%~dp0select-language.cmd" "%DEST%\" >nul
 if exist "%~dp0language.txt" copy /y "%~dp0language.txt" "%DEST%\" >nul
+rem The launcher too, so global can still be started after this folder is deleted
+copy /y "%~dp0run-goodbyedpi-global.bat" "%DEST%\" >nul
+copy /y "%~dp0goodbyedpi-global.ps1" "%DEST%\" >nul
 
 rem Chosen setting, all sites
 set ARGS=%PROFILE_ARGS%
@@ -88,6 +99,11 @@ goto fail
 
 :nofile
 echo %M_NOFILE% %MISSING%
+goto fail
+
+:driverlocked
+echo %M_DRIVERLOCKED1%
+echo %M_DRIVERLOCKED2%
 goto fail
 
 :copyfail

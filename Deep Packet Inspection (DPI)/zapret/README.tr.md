@@ -78,7 +78,7 @@ Sonra `service_custom_create.cmd`'yi tekrar çalıştır — yeni listeyi kopyal
 
 ### zapret-global (tüm PC, istediğinde)
 
-1. `run-zapret-global.bat` dosyasına çift tıkla.
+1. `run-zapret-global.bat` dosyasına çift tıkla. Bu dosya `C:\ProgramData\zapret-global` içinde de var, indirdiğin klasörü silsen de çalışır.
 2. Yönetici (UAC) uyarısında **Evet**'e tıkla.
 3. Bir terminal penceresi açılır ve servisin çalıştığını söyler.
 4. Kullandığın sürece **pencereyi açık tut** (küçültebilirsin).

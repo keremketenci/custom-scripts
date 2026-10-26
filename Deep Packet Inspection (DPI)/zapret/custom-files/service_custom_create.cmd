@@ -63,8 +63,12 @@ call :cleardriver
 
 rem Copy the files to a fixed place so the service keeps working even if this folder is moved or deleted.
 rem Wildcards instead of exact names, so versions that ship different DLLs or drivers still work.
-robocopy "%~dp0." "%DEST%" winws.exe *.dll *.sys /R:1 /W:1 >nul
+robocopy "%~dp0." "%DEST%" winws.exe *.dll /R:1 /W:1 >nul
 if errorlevel 8 goto copyfail
+rem The WinDivert driver stays loaded until restart and locks its .sys file in %DEST%, so copy a .sys only if it differs.
+for %%F in ("%~dp0*.sys") do (
+  fc /b "%%~fF" "%DEST%\%%~nxF" >nul 2>&1 || copy /y "%%~fF" "%DEST%\" >nul 2>&1 || goto driverlocked
+)
 robocopy "%~dp0files" "%DEST%\files" list-custom.txt /R:1 /W:1 >nul
 if errorlevel 8 goto copyfail
 if not exist "%~dp0windivert.filter\" goto copied
@@ -110,6 +114,11 @@ goto fail
 
 :nofile
 echo %M_NOFILE% %MISSING%
+goto fail
+
+:driverlocked
+echo %M_DRIVERLOCKED1%
+echo %M_DRIVERLOCKED2%
 goto fail
 
 :copyfail
