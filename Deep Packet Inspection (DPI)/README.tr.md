@@ -10,8 +10,8 @@ Windows 11'de DPI engellerini (örneğin Türkiye'deki Discord engelini) aşmak 
 |---|---|---|
 | Web siteleri (Discord vb.) | ✅ | ✅ |
 | Discord sesli / görüntülü görüşme | ✅ her zaman işlenir | ⚠️ sadece sağlayıcın ses trafiğini ayrıca engellemiyorsa |
-| Menüdeki yöntem sayısı | 6 | 6–7 (iki sürüm: orijinali ve Türkiye için yapılmış bir fork) |
-| Testimizde (Türkiye'de bir bağlantı, Ekim 2026) | 6 ayarın hepsi çalıştı | 7'den 3'ü (turkey), 6'dan 3'ü (valdik) çalıştı |
+| Menüdeki yöntem sayısı | 7 | 7–8 (iki sürüm: orijinali ve Türkiye için yapılmış bir fork) |
+| Testimizde (Türkiye'de bir bağlantı, Ekim 2026) | test edilen 6 ayarın hepsi çalıştı (TTL 5 sonradan eklendi) | test edilen ayarlardan 7'de 3'ü (turkey), 6'da 3'ü (valdik) çalıştı (TTL 7 sonradan eklendi) |
 
 **Emin değilsen [zapret](zapret) ile başla.** Senin bağlantında çalışmazsa [GoodbyeDPI](goodbyedpi)'ı dene.
 

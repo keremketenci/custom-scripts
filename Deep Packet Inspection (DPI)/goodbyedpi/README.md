@@ -8,8 +8,8 @@ There are two GoodbyeDPI versions. **Pick one**:
 
 | Folder | Version | Default settings |
 |---|---|---|
-| `turkey` | [GoodbyeDPI-Turkey](https://github.com/cagritaskn/GoodbyeDPI-Turkey) (0.2.3rc3), a fork of ValdikSS's tool made for Turkey | `-5` + DNS redirect. Has extra alternative settings (mainly for Superonline). |
-| `valdik` | Original [ValdikSS GoodbyeDPI](https://github.com/ValdikSS/GoodbyeDPI) (0.2.2) | `-5` + DNS redirect |
+| `turkey` | [GoodbyeDPI-Turkey](https://github.com/cagritaskn/GoodbyeDPI-Turkey) (0.2.3rc3), a fork of ValdikSS's tool made for Turkey | `-5 --set-ttl 5` + DNS redirect (TTL 7 for Superonline). Has extra alternative settings (mainly for Superonline). |
+| `valdik` | Original [ValdikSS GoodbyeDPI](https://github.com/ValdikSS/GoodbyeDPI) (0.2.2) | `-5 --set-ttl 5` + DNS redirect (TTL 7 for Superonline) |
 
 The scripts in both folders are the same. The only difference is the options in the settings menu shown during install (`select-profile.cmd`). They also use the same service names, so installing one replaces the other. Only one can be installed at a time.
 
@@ -61,7 +61,7 @@ In the GoodbyeDPI folder, **double-click** these and click **Yes** on the admin 
 - `service_custom_create.cmd` → installs and starts **goodbyedpi-custom**. From now on it runs automatically on every boot.
 - `service_global_create.cmd` → installs **goodbyedpi-global**. It doesn't start it; global is only started manually (see below).
 
-Both first ask for the **language** (`1) English  2) Turkce`) and then show a **settings menu**. If you don't know what to pick, **just press Enter** both times: English and the default setting. Your choices are saved (`language.txt`, `profile.txt`) and come up as the default next time (global included). The remove scripts and the global window use the saved language without asking. To change only the language, double-click `select-language.cmd`. (`select-profile.cmd` is only used by the create scripts; opening it directly just tells you that.) Your choice is saved and comes up as the default next time (global included). If a site won't open, see *Troubleshooting* below.
+Both first ask for the **language** (`1) English  2) Turkce`) and then show a **settings menu**. If you don't know what to pick, **just press Enter** both times: English and the default setting. **On Superonline, type `2` in the settings menu.** Your choices are saved (`language.txt`, `profile.txt`) and come up as the default next time (global included). The remove scripts and the global window use the saved language without asking. To change only the language, double-click `select-language.cmd`. (`select-profile.cmd` is only used by the create scripts; opening it directly just tells you that.) Your choice is saved and comes up as the default next time (global included). If a site won't open, see *Troubleshooting* below.
 
 When you see `Installed.` / `GoodbyeDPI Global service created.`, press any key to close the window. If something goes wrong, you'll see a message starting with `ERROR:` explaining what to do.
 
@@ -149,15 +149,16 @@ What bypasses the block depends on your internet provider, so the default may no
 
 | | Turkey menu | Valdik menu |
 |---|---|---|
-| 1 | `-5` + DNS (default) ✅ | `-5` + DNS (default) ✅ |
-| 2 | `-5 --set-ttl 5` + DNS (the fork's own default) ❌ | `-5 --set-ttl 5` + DNS ✅ |
-| 3 | `-5` ✅ | `-6` + DNS ❌ |
-| 4 | `--set-ttl 3` ❌ | `--set-ttl 3` + DNS ❌ |
-| 5 | `--set-ttl 3` + DNS ❌ | `-1` + DNS ❌ |
-| 6 | `-9` + DNS ❌ | `-5` (no DNS) ✅ |
-| 7 | `-9` ❌ | — |
+| 1 | `-5 --set-ttl 5` + DNS (default, Türk Telekom and most providers) ❌ | `-5 --set-ttl 5` + DNS (default, Türk Telekom and most providers) ✅ |
+| 2 | `-5 --set-ttl 7` + DNS (**Superonline users: pick this one**) | `-5 --set-ttl 7` + DNS (**Superonline users: pick this one**) |
+| 3 | `-5` + DNS (automatic TTL, if neither 1 nor 2 works) ✅ | `-5` + DNS (automatic TTL, if neither 1 nor 2 works) ✅ |
+| 4 | `-5` ✅ | `-6` + DNS ❌ |
+| 5 | `--set-ttl 3` ❌ | `--set-ttl 3` + DNS ❌ |
+| 6 | `--set-ttl 3` + DNS ❌ | `-1` + DNS ❌ |
+| 7 | `-9` + DNS ❌ | `-5` (no DNS) ✅ |
+| 8 | `-9` ❌ | — |
 
-✅ / ❌ = worked / didn't work for Discord in our test on one Turkish connection (October 2026). Blocking differs between providers, so ❌ settings are still worth trying on yours. Turkey options 3–7 are the fork's alternative settings made for Superonline.
+✅ / ❌ = worked / didn't work for Discord in our test on one Turkish connection (October 2026). Option 2 was added later and wasn't part of that test. Blocking differs between providers, so ❌ settings are still worth trying on yours. The TTLs for 1 and 2 come from what works on these providers. Turkey options 4–8 are the fork's alternative settings made for Superonline.
 
 If none of them work, switch to the other version (turkey ↔ valdik) or try [zapret](../zapret), which has more bypass methods.
 

@@ -10,8 +10,8 @@ Ready-made scripts for getting past DPI blocks (for example the Discord block in
 |---|---|---|
 | Websites (Discord, etc.) | ✅ | ✅ |
 | Discord voice / video calls | ✅ always handled | ⚠️ only if your provider doesn't block the voice traffic itself |
-| Bypass methods in the menu | 6 | 6–7 (two versions: original and a fork made for Turkey) |
-| In our test (one Turkish connection, Oct 2026) | all 6 settings worked | 3 of 7 (turkey), 3 of 6 (valdik) worked |
+| Bypass methods in the menu | 7 | 7–8 (two versions: original and a fork made for Turkey) |
+| In our test (one Turkish connection, Oct 2026) | all 6 tested settings worked (TTL 5 was added later) | 3 of 7 (turkey), 3 of 6 (valdik) tested settings worked (TTL 7 was added later) |
 
 **Not sure? Start with [zapret](zapret).** If it doesn't work on your connection, try [GoodbyeDPI](goodbyedpi).
 

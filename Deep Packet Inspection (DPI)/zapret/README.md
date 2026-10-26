@@ -48,7 +48,7 @@ Inside `zapret-win-bundle-master\zapret-winws`, **double-click** these and click
 - `service_custom_create.cmd` → installs and starts **zapret-custom**. From now on it runs automatically on every boot. Nothing else to do.
 - `service_global_create.cmd` → installs **zapret-global** (does not start it, it is only started manually — see below).
 
-Both first ask for the **language** (`1) English  2) Turkce`) and then show a **settings menu**. If you don't know what to pick, **just press Enter** both times: English and the default setting. Your choices are saved (`language.txt`, `profile.txt`) and come up as the default next time (global included). The remove scripts and the global window use the saved language without asking. To change only the language, double-click `select-language.cmd`. (`select-profile.cmd` is only used by the create scripts; opening it directly just tells you that.) Your choice is saved and comes up as the default next time (global included). If a site won't open, see *Troubleshooting* below.
+Both first ask for the **language** (`1) English  2) Turkce`) and then show a **settings menu**. If you don't know what to pick, **just press Enter** both times: English and the default setting. **On Superonline, type `2` in the settings menu.** Your choices are saved (`language.txt`, `profile.txt`) and come up as the default next time (global included). The remove scripts and the global window use the saved language without asking. To change only the language, double-click `select-language.cmd`. (`select-profile.cmd` is only used by the create scripts; opening it directly just tells you that.) Your choice is saved and comes up as the default next time (global included). If a site won't open, see *Troubleshooting* below.
 
 When you see `Installed.` / `Zapret Global service created.`, press any key to close the window. If something goes wrong, you'll see a message starting with `ERROR:` explaining what to do.
 
@@ -123,26 +123,27 @@ What bypasses the block depends on your internet provider, so the default may no
 
 | | Setting | What it does |
 |---|---|---|
-| 1 | fake, TTL 7 (default) | Fake packet that expires after 7 hops |
-| 2 | fake, auto TTL | Same, but picks the TTL for your connection automatically. Try this first if 1 fails |
-| 3 | fake, md5sig | Corrupts the fake packet a different way |
-| 4 | fake, badseq | Corrupts the fake packet a different way |
-| 5 | hostfakesplit, md5sig | Splits the site name and inserts a fake one |
-| 6 | multidisorder | Sends no fake packets; splits the packet and sends the pieces out of order |
+| 1 | fake, TTL 5 (default) | Fake packet that expires after 5 hops. Works on Türk Telekom and most providers |
+| 2 | fake, TTL 7 | Same, expires after 7 hops. **Superonline users: pick this one** |
+| 3 | fake, auto TTL | Same, but picks the TTL for each site automatically. Try this if neither 1 nor 2 works |
+| 4 | fake, md5sig | Corrupts the fake packet a different way |
+| 5 | fake, badseq | Corrupts the fake packet a different way |
+| 6 | hostfakesplit, md5sig | Splits the site name and inserts a fake one |
+| 7 | multidisorder | Sends no fake packets; splits the packet and sends the pieces out of order |
 
 The menu setting only affects websites (TCP 80/443). The Discord voice setting stays the same whatever you pick.
 
-All 6 settings opened Discord in our test on one Turkish connection (October 2026). Blocking differs between providers, so on yours some may not work; that's why there are several.
+Blocking differs between providers, so on yours some settings may not work; that's why there are several. The TTLs for 1 and 2 come from what works with GoodbyeDPI on these providers. Settings 2–7 all opened Discord in our test on one Turkish connection (October 2026).
 
 ### If none of them work: blockcheck
 
-If none of the 6 menu settings work, to find what works on your connection:
+If none of the menu settings work, to find what works on your connection:
 
 1. Stop both services first (close the global window, stop `zapret-custom` in `services.msc`).
 2. Run `zapret-win-bundle-master\blockcheck\blockcheck.cmd` and enter the site you want to test (e.g. `discord.com`).
 3. When it finishes, the working methods are listed at the end under `* SUMMARY`. Pick a line that starts with `curl_test_https_tls12` (HTTPS) and copy the part from the first `--dpi-desync` to the end of the line (leave out `--wf-l3` and `--wf-tcp`).
-4. Open `select-profile.cmd` in Notepad and paste it on one of the `PROFILE_ARGS=` lines, replacing the setting there. For example, to put it on number 6:
+4. Open `select-profile.cmd` in Notepad and paste it on one of the `PROFILE_ARGS=` lines, replacing the setting there. For example, to put it on number 7:
    ```
-   if "%SEL%"=="6" set "PROFILE_ARGS=--dpi-desync=fakedsplit --dpi-desync-fooling=md5sig --dpi-desync-split-pos=1"
+   if "%SEL%"=="7" set "PROFILE_ARGS=--dpi-desync=fakedsplit --dpi-desync-fooling=md5sig --dpi-desync-split-pos=1"
    ```
 5. Run `service_custom_create.cmd` and pick that number. The script checks that zapret accepts it before installing.

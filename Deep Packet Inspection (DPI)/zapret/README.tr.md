@@ -48,7 +48,7 @@ Windows "dosyaların yerini değiştir" diye sorarsa **Değiştir**'e tıkla.
 - `service_custom_create.cmd` → **zapret-custom** servisini kurar ve başlatır. Artık her PC açılışında otomatik çalışır. Başka bir şey yapmana gerek yok.
 - `service_global_create.cmd` → **zapret-global** servisini kurar (başlatmaz, sadece elle başlatılır — aşağıya bak).
 
-İkisi de önce **dil** sorar (`1) English  2) Turkce`), sonra bir **ayar menüsü** gösterir. Türkçe için `2` yaz. Ayarda ne seçeceğini bilmiyorsan **Enter'a bas**, varsayılan ayar kurulur. Seçimlerin kaydedilir (`language.txt`, `profile.txt`) ve bir sonraki kurulumda (global dahil) varsayılan olarak gelir. Kaldırma dosyaları ve global penceresi tekrar sormadan kayıtlı dili kullanır. Sadece dili değiştirmek istersen `select-language.cmd`'ye çift tıkla. (`select-profile.cmd` sadece create dosyaları tarafından kullanılır, doğrudan açarsan sana bunu söyler.) Site açılmazsa ne yapacağın aşağıda, *Sorun Giderme* bölümünde.
+İkisi de önce **dil** sorar (`1) English  2) Turkce`), sonra bir **ayar menüsü** gösterir. Türkçe için `2` yaz. Ayarda ne seçeceğini bilmiyorsan **Enter'a bas**, varsayılan ayar kurulur. **Superonline kullanıyorsan ayar menüsünde `2` yaz.** Seçimlerin kaydedilir (`language.txt`, `profile.txt`) ve bir sonraki kurulumda (global dahil) varsayılan olarak gelir. Kaldırma dosyaları ve global penceresi tekrar sormadan kayıtlı dili kullanır. Sadece dili değiştirmek istersen `select-language.cmd`'ye çift tıkla. (`select-profile.cmd` sadece create dosyaları tarafından kullanılır, doğrudan açarsan sana bunu söyler.) Site açılmazsa ne yapacağın aşağıda, *Sorun Giderme* bölümünde.
 
 `Kuruldu.` / `Zapret Global servisi olusturuldu.` yazısını görünce (İngilizce seçtiysen `Installed.` / `Zapret Global service created.`) bir tuşa basıp pencereyi kapatabilirsin. Bir şey ters giderse `HATA:` (İngilizce'de `ERROR:`) ile başlayan bir mesaj ve ne yapman gerektiği yazar.
 
@@ -123,26 +123,27 @@ Engel aşma yöntemi internet sağlayıcısına göre değişir. Varsayılan aya
 
 | | Ayar | Ne yapar |
 |---|---|---|
-| 1 | fake, TTL 7 (varsayılan) | Sahte paket, 7 adım sonra kaybolur |
-| 2 | fake, otomatik TTL | Aynısı, ama TTL'yi bağlantına göre kendisi ayarlar. 1 çalışmazsa önce bunu dene |
-| 3 | fake, md5sig | Sahte paketi farklı bir yöntemle bozar |
-| 4 | fake, badseq | Sahte paketi farklı bir yöntemle bozar |
-| 5 | hostfakesplit, md5sig | Site adını bölüp araya sahte ad koyar |
-| 6 | multidisorder | Sahte paket göndermez, paketi bölüp karışık sırayla yollar |
+| 1 | fake, TTL 5 (varsayılan) | Sahte paket, 5 adım sonra kaybolur. Türk Telekom ve çoğu sağlayıcıda çalışır |
+| 2 | fake, TTL 7 | Aynısı, 7 adım sonra kaybolur. **Superonline kullanıyorsan bunu seç** |
+| 3 | fake, otomatik TTL | Aynısı, ama TTL'yi her site için kendisi ayarlar. 1 de 2 de çalışmazsa bunu dene |
+| 4 | fake, md5sig | Sahte paketi farklı bir yöntemle bozar |
+| 5 | fake, badseq | Sahte paketi farklı bir yöntemle bozar |
+| 6 | hostfakesplit, md5sig | Site adını bölüp araya sahte ad koyar |
+| 7 | multidisorder | Sahte paket göndermez, paketi bölüp karışık sırayla yollar |
 
 Menüdeki ayar sadece web sitelerini (TCP 80/443) etkiler. Discord ses ayarı her seçimde aynı kalır.
 
-Türkiye'deki bir bağlantıda yaptığımız testte (Ekim 2026) 6 ayarın hepsi Discord'u açtı. Engelleme sağlayıcıdan sağlayıcıya değişir, senin bağlantında bazıları çalışmayabilir, bu yüzden birden fazla seçenek var.
+Engelleme sağlayıcıdan sağlayıcıya değişir, senin bağlantında bazı ayarlar çalışmayabilir, bu yüzden birden fazla seçenek var. 1 ve 2'deki TTL değerleri bu sağlayıcılarda GoodbyeDPI ile çalışan değerlerden geliyor. Türkiye'deki bir bağlantıda yaptığımız testte (Ekim 2026) 2–7 arasındaki ayarların hepsi Discord'u açtı.
 
 ### Hiçbiri işe yaramıyorsa: blockcheck
 
-Menüdeki 6 ayarın hiçbiri çalışmazsa senin bağlantında neyin çalıştığını bulmak için:
+Menüdeki ayarların hiçbiri çalışmazsa senin bağlantında neyin çalıştığını bulmak için:
 
 1. Önce iki servisi de kapat (global penceresini kapat, `services.msc`'den `zapret-custom`'ı durdur).
 2. `zapret-win-bundle-master\blockcheck\blockcheck.cmd`'yi çalıştır, test etmek istediğin siteyi gir (örn. `discord.com`).
 3. Bitince çalışan yöntemler en sonda, `* SUMMARY` başlığının altında listelenir. `curl_test_https_tls12` (HTTPS) ile başlayan bir satır seç ve ilk `--dpi-desync`'ten satır sonuna kadar olan kısmı kopyala (`--wf-l3` ve `--wf-tcp` kısımlarını alma).
-4. `select-profile.cmd`'yi Not Defteri ile aç ve kopyaladığını `PROFILE_ARGS=` satırlarından birine, oradaki ayarın yerine yapıştır. Örneğin 6 numaraya koymak için:
+4. `select-profile.cmd`'yi Not Defteri ile aç ve kopyaladığını `PROFILE_ARGS=` satırlarından birine, oradaki ayarın yerine yapıştır. Örneğin 7 numaraya koymak için:
    ```
-   if "%SEL%"=="6" set "PROFILE_ARGS=--dpi-desync=fakedsplit --dpi-desync-fooling=md5sig --dpi-desync-split-pos=1"
+   if "%SEL%"=="7" set "PROFILE_ARGS=--dpi-desync=fakedsplit --dpi-desync-fooling=md5sig --dpi-desync-split-pos=1"
    ```
 5. `service_custom_create.cmd`'yi çalıştır ve o numarayı seç. Script kurmadan önce zapret'in bu ayarı kabul edip etmediğini kontrol eder.

@@ -2,6 +2,7 @@
 rem Called by service_custom_create.cmd and service_global_create.cmd, don't run it on its own.
 rem Puts the chosen setting into PROFILE_ARGS and saves the choice to profile.txt (it becomes the default next time).
 rem Only uses modes -1 ... -6, which every GoodbyeDPI version since 0.2.2 supports.
+rem 1-2 are the fake TTLs known to work in Turkey (5: Turk Telekom and most providers, 7: Superonline).
 rem Opened directly (double-click): explain how to change the setting instead
 if defined DPI_CALLER goto main
 set "LNG=en"
@@ -28,20 +29,22 @@ echo %M_MENU1%
 echo %M_MENU2%
 echo.
 if "%LNG%"=="tr" goto options_tr
-echo   1) -5 + DNS                 (default)
-echo   2) -5 --set-ttl 5 + DNS     (recommended for Turkey)
-echo   3) -6 + DNS                 (fake packet with wrong sequence number)
-echo   4) --set-ttl 3 + DNS
-echo   5) -1 + DNS                 (old, most compatible mode)
-echo   6) -5                       (no DNS redirect)
+echo   1) -5 --set-ttl 5 + DNS     (default, Turk Telekom and most providers)
+echo   2) -5 --set-ttl 7 + DNS     (Superonline)
+echo   3) -5 + DNS                 (automatic TTL, if neither TTL works)
+echo   4) -6 + DNS                 (fake packet with wrong sequence number)
+echo   5) --set-ttl 3 + DNS
+echo   6) -1 + DNS                 (old, most compatible mode)
+echo   7) -5                       (no DNS redirect)
 goto ask
 :options_tr
-echo   1) -5 + DNS                 (varsayilan)
-echo   2) -5 --set-ttl 5 + DNS     (Turkiye icin onerilen)
-echo   3) -6 + DNS                 (yanlis sira numarali sahte paket)
-echo   4) --set-ttl 3 + DNS
-echo   5) -1 + DNS                 (eski, en uyumlu mod)
-echo   6) -5                       (DNS yonlendirme yok)
+echo   1) -5 --set-ttl 5 + DNS     (varsayilan, Turk Telekom ve cogu saglayici)
+echo   2) -5 --set-ttl 7 + DNS     (Superonline)
+echo   3) -5 + DNS                 (otomatik TTL, iki TTL de tutmazsa)
+echo   4) -6 + DNS                 (yanlis sira numarali sahte paket)
+echo   5) --set-ttl 3 + DNS
+echo   6) -1 + DNS                 (eski, en uyumlu mod)
+echo   7) -5                       (DNS yonlendirme yok)
 
 :ask
 echo.
@@ -50,12 +53,13 @@ set /p "IN=%M_CHOICE% [%SEL%]: "
 if defined IN set "SEL=%IN%"
 
 set "PROFILE_ARGS="
-if "%SEL%"=="1" set "PROFILE_ARGS=-5 %DNS%"
-if "%SEL%"=="2" set "PROFILE_ARGS=-5 --set-ttl 5 %DNS%"
-if "%SEL%"=="3" set "PROFILE_ARGS=-6 %DNS%"
-if "%SEL%"=="4" set "PROFILE_ARGS=--set-ttl 3 %DNS%"
-if "%SEL%"=="5" set "PROFILE_ARGS=-1 %DNS%"
-if "%SEL%"=="6" set "PROFILE_ARGS=-5"
+if "%SEL%"=="1" set "PROFILE_ARGS=-5 --set-ttl 5 %DNS%"
+if "%SEL%"=="2" set "PROFILE_ARGS=-5 --set-ttl 7 %DNS%"
+if "%SEL%"=="3" set "PROFILE_ARGS=-5 %DNS%"
+if "%SEL%"=="4" set "PROFILE_ARGS=-6 %DNS%"
+if "%SEL%"=="5" set "PROFILE_ARGS=--set-ttl 3 %DNS%"
+if "%SEL%"=="6" set "PROFILE_ARGS=-1 %DNS%"
+if "%SEL%"=="7" set "PROFILE_ARGS=-5"
 if defined PROFILE_ARGS goto done
 echo %M_INVALID% %SEL%
 set "SEL=1"

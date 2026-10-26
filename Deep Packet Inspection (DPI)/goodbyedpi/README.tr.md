@@ -8,8 +8,8 @@ Windows 11'de DPI engellerini aşmak için [GoodbyeDPI](https://github.com/Valdi
 
 | Klasör | Sürüm | Varsayılan ayar |
 |---|---|---|
-| `turkey` | [GoodbyeDPI-Turkey](https://github.com/cagritaskn/GoodbyeDPI-Turkey) (0.2.3rc3) — ValdikSS'in Türkiye için yapılmış forku | `-5` + DNS yönlendirme. Fazladan alternatif ayarları var (çoğu Superonline için). |
-| `valdik` | Orijinal [ValdikSS GoodbyeDPI](https://github.com/ValdikSS/GoodbyeDPI) (0.2.2) | `-5` + DNS yönlendirme |
+| `turkey` | [GoodbyeDPI-Turkey](https://github.com/cagritaskn/GoodbyeDPI-Turkey) (0.2.3rc3) — ValdikSS'in Türkiye için yapılmış forku | `-5 --set-ttl 5` + DNS yönlendirme (Superonline için TTL 7). Fazladan alternatif ayarları var (çoğu Superonline için). |
+| `valdik` | Orijinal [ValdikSS GoodbyeDPI](https://github.com/ValdikSS/GoodbyeDPI) (0.2.2) | `-5 --set-ttl 5` + DNS yönlendirme (Superonline için TTL 7) |
 
 İki klasördeki scriptler aynı. Tek fark, kurulumda çıkan ayar menüsündeki seçenekler (`select-profile.cmd`). Servis adları da aynı, yani birini kurunca diğerinin yerine geçer. İkisi aynı anda kurulu olamaz.
 
@@ -61,7 +61,7 @@ GoodbyeDPI klasöründe şu dosyalara **çift tıkla** ve yönetici (UAC) uyarı
 - `service_custom_create.cmd` → **goodbyedpi-custom** servisini kurar ve başlatır. Artık her PC açılışında otomatik çalışır.
 - `service_global_create.cmd` → **goodbyedpi-global** servisini kurar. Başlatmaz, sadece elle başlatılır (aşağıya bak).
 
-İkisi de önce **dil** sorar (`1) English  2) Turkce`), sonra bir **ayar menüsü** gösterir. Türkçe için `2` yaz. Ayarda ne seçeceğini bilmiyorsan **Enter'a bas**, varsayılan ayar kurulur. Seçimlerin kaydedilir (`language.txt`, `profile.txt`) ve bir sonraki kurulumda (global dahil) varsayılan olarak gelir. Kaldırma dosyaları ve global penceresi tekrar sormadan kayıtlı dili kullanır. Sadece dili değiştirmek istersen `select-language.cmd`'ye çift tıkla. (`select-profile.cmd` sadece create dosyaları tarafından kullanılır, doğrudan açarsan sana bunu söyler.) Site açılmazsa ne yapacağın aşağıda, *Sorun Giderme* bölümünde.
+İkisi de önce **dil** sorar (`1) English  2) Turkce`), sonra bir **ayar menüsü** gösterir. Türkçe için `2` yaz. Ayarda ne seçeceğini bilmiyorsan **Enter'a bas**, varsayılan ayar kurulur. **Superonline kullanıyorsan ayar menüsünde `2` yaz.** Seçimlerin kaydedilir (`language.txt`, `profile.txt`) ve bir sonraki kurulumda (global dahil) varsayılan olarak gelir. Kaldırma dosyaları ve global penceresi tekrar sormadan kayıtlı dili kullanır. Sadece dili değiştirmek istersen `select-language.cmd`'ye çift tıkla. (`select-profile.cmd` sadece create dosyaları tarafından kullanılır, doğrudan açarsan sana bunu söyler.) Site açılmazsa ne yapacağın aşağıda, *Sorun Giderme* bölümünde.
 
 `Kuruldu.` / `GoodbyeDPI Global servisi olusturuldu.` yazısını görünce (İngilizce seçtiysen `Installed.` / `GoodbyeDPI Global service created.`) bir tuşa basıp pencereyi kapatabilirsin. Bir şey ters giderse `HATA:` (İngilizce'de `ERROR:`) ile başlayan bir mesaj ve ne yapman gerektiği yazar.
 
@@ -149,15 +149,16 @@ Engel aşma yöntemi internet sağlayıcısına göre değişir. Varsayılan aya
 
 | | Turkey menüsü | Valdik menüsü |
 |---|---|---|
-| 1 | `-5` + DNS (varsayılan) ✅ | `-5` + DNS (varsayılan) ✅ |
-| 2 | `-5 --set-ttl 5` + DNS (forkun kendi varsayılanı) ❌ | `-5 --set-ttl 5` + DNS ✅ |
-| 3 | `-5` ✅ | `-6` + DNS ❌ |
-| 4 | `--set-ttl 3` ❌ | `--set-ttl 3` + DNS ❌ |
-| 5 | `--set-ttl 3` + DNS ❌ | `-1` + DNS ❌ |
-| 6 | `-9` + DNS ❌ | `-5` (DNS yok) ✅ |
-| 7 | `-9` ❌ | — |
+| 1 | `-5 --set-ttl 5` + DNS (varsayılan, Türk Telekom ve çoğu sağlayıcı) ❌ | `-5 --set-ttl 5` + DNS (varsayılan, Türk Telekom ve çoğu sağlayıcı) ✅ |
+| 2 | `-5 --set-ttl 7` + DNS (**Superonline kullanıyorsan bunu seç**) | `-5 --set-ttl 7` + DNS (**Superonline kullanıyorsan bunu seç**) |
+| 3 | `-5` + DNS (otomatik TTL, 1 de 2 de çalışmazsa) ✅ | `-5` + DNS (otomatik TTL, 1 de 2 de çalışmazsa) ✅ |
+| 4 | `-5` ✅ | `-6` + DNS ❌ |
+| 5 | `--set-ttl 3` ❌ | `--set-ttl 3` + DNS ❌ |
+| 6 | `--set-ttl 3` + DNS ❌ | `-1` + DNS ❌ |
+| 7 | `-9` + DNS ❌ | `-5` (DNS yok) ✅ |
+| 8 | `-9` ❌ | — |
 
-✅ / ❌ = Türkiye'deki bir bağlantıda yaptığımız testte (Ekim 2026) Discord'u açtı / açmadı. Engelleme sağlayıcıdan sağlayıcıya değişir, o yüzden ❌ olan ayarlar senin bağlantında yine de denemeye değer. Turkey'deki 3–7 numaralar, forkun Superonline için hazırladığı alternatif ayarlar.
+✅ / ❌ = Türkiye'deki bir bağlantıda yaptığımız testte (Ekim 2026) Discord'u açtı / açmadı. 2 numara sonradan eklendi, o testte yoktu. Engelleme sağlayıcıdan sağlayıcıya değişir, o yüzden ❌ olan ayarlar senin bağlantında yine de denemeye değer. 1 ve 2'deki TTL değerleri bu sağlayıcılarda çalışan değerlerden geliyor. Turkey'deki 4–8 numaralar, forkun Superonline için hazırladığı alternatif ayarlar.
 
 Hiçbiri çalışmazsa diğer sürüme geç (turkey ↔ valdik) ya da daha fazla yöntemi olan [zapret](../zapret)'i dene.
 
