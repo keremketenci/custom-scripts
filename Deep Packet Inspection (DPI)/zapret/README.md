@@ -119,6 +119,7 @@ They remove the service and its folder in `C:\ProgramData`. The WinDivert driver
 - **"This zapret version doesn't accept the chosen setting"** → pick another number. If it accepts none of them, use the included `zapret-win-bundle-master`.
 - **"WARNING: ... Discord voice may not work"** → your zapret version has no Discord voice filter. Web still works; for voice, use the included `zapret-win-bundle-master`.
 - **A site still doesn't open** → check that it's in `list-custom.txt`, then try another setting as described below.
+- **Discord stops working while a VPN is connected** → zapret also handles the traffic inside the VPN tunnel. With the TTL settings, the fake packet can reach Discord's servers when the VPN server is close to them, which breaks the connection (we saw this with setting 2, TTL 7). Reinstall zapret-custom with setting `4` (md5sig): the server throws its fake packet away, so it works with and without the VPN. On our Superonline connection it worked in both cases. This is for zapret-custom, which only handles Discord; for zapret-global we haven't checked whether md5sig works with every site, so keep its setting unless you use global together with a VPN.
 - **Check if the services exist / are running** → press `Win + R`, type `services.msc`, look for `zapret-custom` and `zapret-global`.
 
 ### If a site won't open: try another setting

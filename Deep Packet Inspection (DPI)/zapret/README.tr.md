@@ -119,6 +119,7 @@ Servisi ve `C:\ProgramData` içindeki klasörünü kaldırırlar. WinDivert sür
 - **"Bu zapret surumu secilen ayari kabul etmiyor" diyor** → başka bir numara seç. Hiçbirini kabul etmiyorsa hazır gelen `zapret-win-bundle-master`'ı kullan.
 - **"UYARI: ... Discord sesli sohbet calismayabilir" diyor** → kullandığın zapret sürümünde Discord ses filtresi yok. Web siteleri yine çalışır, ses için hazır gelen `zapret-win-bundle-master`'ı kullan.
 - **Site hâlâ açılmıyor** → `list-custom.txt` içinde olduğunu kontrol et, sonra aşağıdaki gibi başka bir ayar dene.
+- **VPN bağlıyken Discord açılmıyor** → zapret VPN tünelinin içindeki trafiğe de dokunuyor. TTL'li ayarlarda VPN sunucusu Discord'un sunucularına yakınsa sahte paket Discord'a ulaşıp bağlantıyı bozabiliyor (2. ayarda, TTL 7'de gördük). zapret-custom'ı `4` (md5sig) ile yeniden kur: bu ayarda sahte paketi sunucu kendisi çöpe atıyor, VPN açıkken de kapalıyken de çalışıyor. Bizim Superonline bağlantımızda iki durumda da çalıştı. Bu öneri sadece Discord'u işleyen zapret-custom için; zapret-global'de md5sig'in her siteyle çalışıp çalışmadığını kontrol etmedik, global'i VPN ile birlikte kullanmıyorsan onun ayarını değiştirme.
 - **Servisler kurulu mu / çalışıyor mu bakmak için** → `Win + R` bas, `services.msc` yaz, `zapret-custom` ve `zapret-global`'i bul.
 
 ### Site açılmıyorsa: başka ayar dene
